@@ -15,7 +15,6 @@
   "homepage": "https://github.com/tritania/Comedo",
   "dependencies": {
     "express": "^4.1.2",
-    "body-parser": "^1.1.2",
     "errorhandler": "^1.0.1",
     "method-override": "^1.0.0",
     "socket.io": "^1.0.4"
