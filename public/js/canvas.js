@@ -42,26 +42,43 @@ function cachePlayer() {
     var loader = new THREE.JSONLoader();
     
     loader.load('data/models/entity.js', function (geometry) {
-        var material = new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture('data/textures/testEntity.png')  //specify and load the texture
+        var player = new THREE.MeshBasicMaterial({
+                map: THREE.ImageUtils.loadTexture('data/textures/Player.png')  //specify and load the texture
+            }),
+            enemy = new THREE.MeshBasicMaterial({
+                map: THREE.ImageUtils.loadTexture('data/textures/Enemy.png')  //specify and load the texture
             });
         geometrys.push(geometry);
-        materials.push(material);
+        materials.push(player);
+        materials.push(enemy);
     });
 }
 
-function loadPlayer() {
+function loadPlayer(x, y) {
     "use strict";
     var mesh = new THREE.Mesh(
         geometrys[0],
         materials[0]
     );
-    mesh.position.set(1, 1, 0);
+    generate();
+    mesh.position.set(x, y, 0);
+    scene.add(mesh);
+    objects.push(mesh);
+    animate(); 
+}
+
+function loadEnemy(x, y) {
+    "use strict";
+    console.log("Enemy added at " + x + " " + y);
+    var mesh = new THREE.Mesh(
+        geometrys[0],
+        materials[1]
+    );
+    mesh.position.set(x, y, 0);
     scene.add(mesh);
     objects.push(mesh);
     animate();
 }
-
 
 animate();
 cachePlayer();
