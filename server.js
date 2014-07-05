@@ -10,10 +10,6 @@ var express = require("express"),
     port = 9090;
 var io = require('socket.io').listen(app.listen(port));
 
-app.get("/", function (req, res) {
-    res.redirect("/index.html");
-});
-
 app.use(methodOverride());
 app.use(bodyParser());
 app.use(express.static(__dirname + '/public'));
