@@ -5,6 +5,7 @@
 var clock = new THREE.Clock(),
     selection = null,
     objects = [],
+    player = [],
     materials = [],
     geometrys = [],
     scene = new THREE.Scene(),
@@ -63,7 +64,7 @@ function loadPlayer(x, y) {
     generate();
     mesh.position.set(x, y, 0);
     scene.add(mesh);
-    objects.push(mesh);
+    player.push(mesh);
     animate(); 
 }
 
@@ -99,7 +100,7 @@ function onDocumentMouseDown(event) {
     
     projector.unprojectVector(vector, camera);
     raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
-    intersects = raycaster.intersectObjects(objects);
+    intersects = raycaster.intersectObjects(player);
  
     if (selection !== null) {
         mousevec = new THREE.Vector3(
