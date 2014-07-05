@@ -5,9 +5,8 @@ body {
 .joiner {
     border: 2px solid #a1a1a1;
     position: fixed;
-    top: 50%;
+    top: 30%;
 	left: 50%;
-	margin-top: -110px;
 	margin-left: -175px;
     visibility: visible;
     z-index: 2;
