@@ -39,4 +39,5 @@ body {
     height: 36px;
     background-color: #4cae4c;
     line-height: 36px;
+    cursor: pointer;
 }
