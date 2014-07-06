@@ -6,6 +6,7 @@ var clock = new THREE.Clock(),
     selection = null,
     
     active,
+    movement = null,
     
     objects = [],
     player = [],
@@ -94,11 +95,11 @@ cachePlayer();
 function onDocumentMouseDown(event) {
     "use strict";
     event.preventDefault();
+    if (movement !== null) {
+        movement.stop();
+    }
 		
-		//generate vector based off mouse position
     var vector = new THREE.Vector3((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5),
-        raycaster,
-        intersects,
         mousevec,
         dir,
         distance,
@@ -106,35 +107,26 @@ function onDocumentMouseDown(event) {
         time;
     
     projector.unprojectVector(vector, camera);
-    raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
-    intersects = raycaster.intersectObjects(player);
- 
-    if (selection !== null) {
-        mousevec = new THREE.Vector3(
-            (event.clientX / window.innerWidth) * 2 - 1,
-            -(event.clientY / window.innerHeight) * 2 + 1,
-            0.5
-        );
+        
+    mousevec = new THREE.Vector3(
+        (event.clientX / window.innerWidth) * 2 - 1,
+        -(event.clientY / window.innerHeight) * 2 + 1,
+        0.5
+    );
 
-        projector.unprojectVector(mousevec, camera);
+    projector.unprojectVector(mousevec, camera);
 
-        dir = mousevec.sub(camera.position).normalize();
-        distance = -camera.position.z / dir.z;
-        pos = camera.position.clone().add(dir.multiplyScalar(distance));
+    dir = mousevec.sub(camera.position).normalize();
+    distance = -camera.position.z / dir.z;
+    pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
-        time = (pointDistance(selection.position.x, selection.position.y, pos.x, pos.y)) / 0.0125;
+    time = (pointDistance(player[0].position.x, player[0].position.y, pos.x, pos.y)) / 0.0125;
 
-        new TWEEN.Tween(selection.position, {override: true}).to({
-            x: pos.x,
-            y: pos.y
-        }, time)
-            .easing(TWEEN.Easing.Linear.None).start();
-        selection = null;
-    } else if (intersects.length > 0) {
-        selection = intersects[0].object;
-    } else {
-        selection = null;
-    }
+    movement = new TWEEN.Tween(player[0].position, {override: true}).to({
+        x: pos.x,
+        y: pos.y
+    }, time)
+        .easing(TWEEN.Easing.Linear.None).start();
 }
 
 

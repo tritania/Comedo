@@ -17,8 +17,8 @@ function combat() {
     "use strict";
     if (active) {
         var person = player[0],
-            x = person.position.x,
-            y = person.position.y,
+            x = JSON.parse(JSON.stringify(person.position.x)),
+            y = JSON.parse(JSON.stringify(person.position.y)),
             xe,
             ye,
             i,
@@ -27,8 +27,8 @@ function combat() {
             xe = enemies[i].position.x;
             ye = enemies[i].position.y;
             if ((x >= (xe - cr) && x <= (xe + cr)) &&  (y >= (ye - cr) && y <= (ye + cr))) {
-                time = (pointDistance(xe, ye, x, y) / 0.65);
-                new TWEEN.Tween(enemies[i].position)
+                time = pointDistance(xe, ye, x, y);
+                new TWEEN.Tween(enemies[i].position, {override: true})
                     .to({ x: x, y: y }, time)
                     .easing(TWEEN.Easing.Linear.None).start();
             }
