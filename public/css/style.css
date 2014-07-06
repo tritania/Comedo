@@ -35,9 +35,19 @@ body {
 
 .button {
     margin: 0 auto;
+    margin-bottom: 10px;
     width: 280px;
     height: 36px;
     background-color: #4cae4c;
+    line-height: 36px;
+    cursor: pointer;
+}
+
+.button2 {
+    margin: 0 auto;
+    width: 280px;
+    height: 36px;
+    background-color: #f0ad4e;
     line-height: 36px;
     cursor: pointer;
 }
