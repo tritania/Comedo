@@ -1,11 +1,16 @@
 /*jslint node: true*/
-/*global io, THREE, THREEx, TWEEN, onDocumentMouseDown, requestAnimationFrame, pointDistance*/
+/*global io, THREE, THREEx, TWEEN, onDocumentMouseDown, requestAnimationFrame, pointDistance, generate, combat*/
 /*jslint plusplus: true */
 
 var clock = new THREE.Clock(),
     selection = null,
+    
+    active,
+    
     objects = [],
     player = [],
+    enemies = [],
+    
     materials = [],
     geometrys = [],
     scene = new THREE.Scene(),
@@ -34,6 +39,7 @@ function render() {
 
 function animate() {
     "use strict";
+    combat();
     requestAnimationFrame(animate);
     render();
 }
@@ -65,7 +71,8 @@ function loadPlayer(x, y) {
     mesh.position.set(x, y, 0);
     scene.add(mesh);
     player.push(mesh);
-    animate(); 
+    active = true;
+    animate();
 }
 
 function loadEnemy(x, y) {
@@ -77,7 +84,7 @@ function loadEnemy(x, y) {
     );
     mesh.position.set(x, y, 0);
     scene.add(mesh);
-    objects.push(mesh);
+    enemies.push(mesh);
     animate();
 }
 
