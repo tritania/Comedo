@@ -39,8 +39,13 @@ function create() {
 }
  
 function update() {
-    game.physics.arcade.collide(player, world);
+    game.physics.arcade.collide(player, world, colhandle);
     hasArrived();
+}
+
+function colhandle() {
+    player.body.velocity.x = 0;
+    player.body.velocity.y = 0;
 }
 
 function hasArrived() {
@@ -50,7 +55,6 @@ function hasArrived() {
             ) {
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
-        console.log("arrived!");
     }
 }
 
@@ -66,8 +70,6 @@ function movePlayer(pointer) {
         angle = Math.atan(dy / dx),
         vX = Math.abs(Math.cos(angle) * 300),
         vY = Math.abs(Math.sin(angle) * 300);
-    console.log(x + ' ' + player.x + ' ' + y + ' ' + player.y);
-    console.log(dx + ' ' + dy + ' ' + angle);
     
     dest = {x: x, y: y};
     
