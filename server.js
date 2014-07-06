@@ -4,6 +4,7 @@
 "use strict";
 var express = require("express"),
     app = express(),
+    worldgen = require('./util/build/Release/worldgen'),
     methodOverride = require('method-override'),
     errorHandler = require('errorhandler'),
     port = 9090;
