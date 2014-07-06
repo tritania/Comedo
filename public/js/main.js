@@ -9,8 +9,12 @@ var width = document.documentElement.clientWidth,
     world,
     active = false,
     dest = {x: 150, y: 150}, //destination
-    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    game;
     //keyinput = game.input.keyboard.createCursorKeys();
+
+function createGame() {
+    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+}
 
 function preload() {
     game.load.spritesheet('player', 'assets/player.png', 30, 45);

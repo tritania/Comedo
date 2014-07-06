@@ -1,4 +1,43 @@
 body {
     margin:0;
     padding:0;
+    background-color: #bbe6a7;
+}
+.joiner {
+    border: 2px solid #a1a1a1;
+    position: fixed;
+    top: 30%;
+	left: 50%;
+	margin-left: -175px;
+    visibility: visible;
+    z-index: 2;
+    background-color: #ffffff;
+    width: 350px;
+    height: 220px;
+    text-align: center;
+}
+
+.container {
+
+}
+
+#gid {
+    margin: 0 auto;
+    text-align: left;
+    border: 1px solid #a1a1a1;
+    background: #ffffff;
+    border-radius: 0px;
+    color: #a8a8a8;
+    padding:8px;
+    margin-bottom:20px;
+    width:280px;
+}
+
+.button {
+    margin: 0 auto;
+    width: 280px;
+    height: 36px;
+    background-color: #4cae4c;
+    line-height: 36px;
+    cursor: pointer;
 }

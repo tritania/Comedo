@@ -3,8 +3,18 @@
         <link rel="shortcut icon" href="data/favicon.ico" >
         <link href="css/style.css" rel="stylesheet" type="text/css">
         <script src="js/phaser.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
     </head>
     <body>
-        <script src="js/main.js" type="text/javascript"></script>
+        <div class="container">
+            <script type="text/javascript" src="js/main.js"></script>
+            <div class="joiner" id="joined">
+                <p>Start a new game or join someone else's</p>
+                <input id="gid" type="text" placeholder="Game ID">
+                <div class="button" onclick="join()">
+                    <p id="buttontxt">START</p>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
