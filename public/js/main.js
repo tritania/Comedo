@@ -33,9 +33,6 @@ function create() {
     
     game.physics.startSystem(Phaser.Physics.ARCADE);
     
-    monster = game.add.group();
-    monster.enableBody = true;
-    
     game.input.onDown.add(movePlayer, this);
     
     world = game.add.group();
@@ -52,9 +49,19 @@ function create() {
         road = game.add.tileSprite(centerMap.roads[i].start.x, centerMap.roads[i].start.y, centerMap.roads[i].size.width, centerMap.roads[i].size.height, "road");
     }
     
+    monster = game.add.group();
+    monster.enableBody = true;
+    
     player = game.add.sprite(150, 150, 'player');
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
+    
+    //currently for testing
+    var tmp = monster.create(150, 150, 'zombie1');
+    game.physics.arcade.enable(tmp);
+    tmp.body.collideWorldBounds = true;
+    tmp.bringToTop();
+    enemies.push(tmp);
     
     active = true;
     
