@@ -82,7 +82,6 @@ function combatStart() {
         xe = enemies[i].x;
         ye = enemies[i].y;
         if ((x >= (xe - cr) && x <= (xe + cr)) &&  (y >= (ye - cr) && y <= (ye + cr))) {
-            console.log("combat started");
             hostiles.push({sprite: enemies[i], index: i});
             moveEnemy({x: x, y: y}, i);
         }
