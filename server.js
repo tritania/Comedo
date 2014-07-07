@@ -21,6 +21,10 @@ console.log("Comedo is initializing...");
 
 io.sockets.on('connection', function (socket) {
     socket.on('join', function (data) {
-        //generate a world
+        
+    });
+    socket.on('getmap', function (data) {
+        console.log(socket.id + " is requesting a map");
+        socket.emit("map", worldgen.createCentral);
     });
 });

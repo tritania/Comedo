@@ -17,6 +17,7 @@ var width = document.documentElement.clientWidth,
     //keyinput = game.input.keyboard.createCursorKeys();
 
 function createGame() {
+    getMap();
     game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 }
 

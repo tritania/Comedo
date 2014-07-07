@@ -70,6 +70,8 @@ var createCentral = function () {
             }
         }
     }
+    
+    return core;
 };
 
 module.exports = createCentral;
