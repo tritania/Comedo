@@ -7,6 +7,7 @@ var width = document.documentElement.clientWidth,
     height = document.documentElement.clientHeight,
     player,
     world,
+    enviroment,
     enemies = [],
     hostiles = [],
     monster,
@@ -24,6 +25,7 @@ function preload() {
     game.load.spritesheet('player', 'assets/player.png', 30, 45);
     game.load.spritesheet('zombie1', 'assets/zombie1.png', 30, 45);
     game.load.image('bush', 'assets/bush.png');
+    game.load.image('road', 'assets/road.png');
 }
  
 function create() {
@@ -31,19 +33,26 @@ function create() {
     
     game.physics.startSystem(Phaser.Physics.ARCADE);
     
-    player = game.add.sprite(150, 150, 'player');
-    game.physics.arcade.enable(player);
-    player.body.collideWorldBounds = true;
-    
     monster = game.add.group();
     monster.enableBody = true;
     
     game.input.onDown.add(movePlayer, this);
     
     world = game.add.group();
+    enviroment = game.add.group();
     world.enableBody = true;
     var testBush = world.create(20, 20, "bush");
     testBush.body.immovable = true;
+    
+    var i,
+        road;
+    for (i = 0; i < centerMap.roads.length; i++) {
+        road = enviroment.create(centerMap.roads[i].start.x, centerMap.roads[i].start.y, "road");
+    }
+    
+    player = game.add.sprite(150, 150, 'player');
+    game.physics.arcade.enable(player);
+    player.body.collideWorldBounds = true;
     
     active = true;
     
