@@ -4,7 +4,7 @@
 "use strict";
 var express = require("express"),
     app = express(),
-    worldgen = require('./utils/build/Release/worldgen'),
+    worldgen = require('./utils/world'),
     methodOverride = require('method-override'),
     errorHandler = require('errorhandler'),
     port = 9090;
@@ -21,6 +21,6 @@ console.log("Comedo is initializing...");
 
 io.sockets.on('connection', function (socket) {
     socket.on('join', function (data) {
-        
+        //generate a world
     });
 });
