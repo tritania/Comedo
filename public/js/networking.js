@@ -2,11 +2,12 @@
 /*global io*/
 /*jslint plusplus: true */
 var socket = io.connect();
+var centerMap;
 
 socket.on("map", function (data) {
     "use strict";
-    console.log("map!");
-    console.log(JSON.stringify(data));
+    centerMap = data;
+    createGame();
 });
 
 function getMap() {

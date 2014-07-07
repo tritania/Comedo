@@ -8,7 +8,7 @@ function rand(x, xp) {
 
 function sumArray(arr) {
     "use strict";
-    var sum,
+    var sum = 0,
         i;
     for (i = 0; i < arr.length; i++) {
         sum += arr[i];
@@ -16,35 +16,23 @@ function sumArray(arr) {
     return sum;
 }
 
-var createCentral = function () {
+exports.createCentral = function () {
     "use strict";
-    var size = 10000,
+    var size = 4000,
+        roadSize = size - 275,
         coreConnections,
         core = {
             roads: []
         },
-        coreSides = [4];
+        coreSides = Array.apply(null, new Array(4)).map(Number.prototype.valueOf, 0);
     
-    coreConnections = rand(3, 5);
+    coreConnections = rand(3, 6);
     
     while (sumArray(coreSides) < coreConnections) {
-        var side = rand(0, 3),
-            con  = rand(0, 1);
+        var side = rand(0, 4),
+            con  = rand(0, 2);
         
-        switch (side) {
-        case 0:
-            coreSides[0] += con;
-            break;
-        case 1:
-            coreSides[1] += con;
-            break;
-        case 2:
-            coreSides[2] += con;
-            break;
-        case 3:
-            coreSides[3] += con;
-            break;
-        }
+        coreSides[side] += con;
     }
     
     var i,
@@ -53,16 +41,16 @@ var createCentral = function () {
     
     for (i = 0; i < coreSides.length; i++) {
         for (j = 0; j < coreSides[i]; j++) {
-            pos = rand(0, size);
+            pos = rand(0, roadSize);
             switch (i) {
             case 0:
                 core.roads.push({start: {x: pos, y: 0}, stop: {x: 0, y: 0}});
                 break;
             case 1:
-                core.roads.push({start: {x: size, y: pos}, stop: {x: 0, y: 0}});
+                core.roads.push({start: {x: roadSize, y: pos}, stop: {x: 0, y: 0}});
                 break;
             case 2:
-                core.roads.push({start: {x: pos, y: size}, stop: {x: 0, y: 0}});
+                core.roads.push({start: {x: pos, y: roadSize}, stop: {x: 0, y: 0}});
                 break;
             case 3:
                 core.roads.push({start: {x: 0, y: pos}, stop: {x: 0, y: 0}});
@@ -70,8 +58,5 @@ var createCentral = function () {
             }
         }
     }
-    
     return core;
 };
-
-module.exports = createCentral;
