@@ -41,13 +41,15 @@ function create() {
     world = game.add.group();
     enviroment = game.add.group();
     world.enableBody = true;
-    var testBush = world.create(20, 20, "bush");
-    testBush.body.immovable = true;
+/*    var testBush = world.create(20, 20, "bush");
+    testBush.body.immovable = true;*/
     
     var i,
+        j,
+        mutliple = 275,
         road;
     for (i = 0; i < centerMap.roads.length; i++) {
-        road = enviroment.create(centerMap.roads[i].start.x, centerMap.roads[i].start.y, "road");
+        road = game.add.tileSprite(centerMap.roads[i].start.x, centerMap.roads[i].start.y, centerMap.roads[i].size.width, centerMap.roads[i].size.height, "road");
     }
     
     player = game.add.sprite(150, 150, 'player');

@@ -37,23 +37,25 @@ exports.createCentral = function () {
     
     var i,
         pos,
-        j;
+        j,
+        length;
     
     for (i = 0; i < coreSides.length; i++) {
         for (j = 0; j < coreSides[i]; j++) {
-            pos = rand(0, roadSize);
+            pos = Math.ceil(rand(0, roadSize) / 275.0) * 275;
+            length = rand(5, 10) * 275;
             switch (i) {
             case 0:
-                core.roads.push({start: {x: pos, y: 0}, stop: {x: 0, y: 0}});
+                core.roads.push({start: {x: pos, y: 0}, size: {width: 275, height: length}});
                 break;
             case 1:
-                core.roads.push({start: {x: roadSize, y: pos}, stop: {x: 0, y: 0}});
+                core.roads.push({start: {x: roadSize, y: pos}, size: {width: length, height: 275}});
                 break;
             case 2:
-                core.roads.push({start: {x: pos, y: roadSize}, stop: {x: 0, y: 0}});
+                core.roads.push({start: {x: pos, y: roadSize}, size: {width: 275, height: length}});
                 break;
             case 3:
-                core.roads.push({start: {x: 0, y: pos}, stop: {x: 0, y: 0}});
+                core.roads.push({start: {x: 0, y: pos}, size: {width: length, height: 275}});
                 break;
             }
         }
