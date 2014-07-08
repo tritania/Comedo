@@ -1,7 +1,7 @@
 /*global module*/
 /*jslint plusplus: true */
 
-function getTile(direction, index) {
+function getTile(direction, index) { //false means the tile does not exist in this chunk
     "use strict";
     switch (direction) {
     case 'NORTH':
@@ -48,13 +48,16 @@ function sumArray(arr) {
 
 exports.createCentral = function () {
     "use strict";
-    var size = 4000,
-        roadSize = size - 275,
-        coreConnections,
+    var coreConnections,
         core = {
-            roads: []
+            id: 1,
+            tiles: new Array(100)
         },
-        coreSides = Array.apply(null, new Array(4)).map(Number.prototype.valueOf, 0);
+        coreSides = Array.apply(null, new Array(4)).map(Number.prototype.valueOf, 0), //0 north, 1 South, 2 East, 3 West
+        north = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        south = [90, 91, 92, 93, 94, 95, 96, 97, 98, 99],
+        east = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99],
+        west = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
     
     coreConnections = rand(3, 6);
     
@@ -72,20 +75,39 @@ exports.createCentral = function () {
     
     for (i = 0; i < coreSides.length; i++) {
         for (j = 0; j < coreSides[i]; j++) {
-            pos = Math.ceil(rand(0, roadSize) / 275.0) * 275;
-            length = rand(5, 10) * 275;
+            pos = rand(0, 9);
             switch (i) {
             case 0:
-                core.roads.push({start: {x: pos, y: 0}, size: {width: 275, height: length}});
+                core.tiles[north[pos]] = {
+                    type: 'road',
+                    orientation: 'v',
+                    subtype: 'none',
+                    direction: 'SOUTH'
+                };
                 break;
             case 1:
-                core.roads.push({start: {x: roadSize, y: pos}, size: {width: length, height: 275}});
+                core.tiles[south[pos]] = {
+                    type: 'road',
+                    orientation: 'v',
+                    subtype: 'none',
+                    direction: 'NORTH'
+                };
                 break;
             case 2:
-                core.roads.push({start: {x: pos, y: roadSize}, size: {width: 275, height: length}});
+                core.tiles[east[pos]]  = {
+                    type: 'road',
+                    orientation: 'h',
+                    subtype: 'none',
+                    direction: 'WEST'
+                };
                 break;
             case 3:
-                core.roads.push({start: {x: 0, y: pos}, size: {width: length, height: 275}});
+                core.tiles[west[pos]]  = {
+                    type: 'road',
+                    orientation: 'h',
+                    subtype: 'none',
+                    direction: 'EAST'
+                };
                 break;
             }
         }

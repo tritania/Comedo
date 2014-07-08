@@ -42,11 +42,16 @@ function create() {
     testBush.body.immovable = true;*/
     
     var i,
-        j,
-        mutliple = 275,
-        road;
-    for (i = 0; i < centerMap.roads.length; i++) {
-        road = game.add.tileSprite(centerMap.roads[i].start.x, centerMap.roads[i].start.y, centerMap.roads[i].size.width, centerMap.roads[i].size.height, "road");
+        multiple = 275,
+        road,
+        x,
+        y;
+    for (i = 0; i < centerMap.tiles.length; i++) {
+        if (centerMap.tiles[i] !== null) {
+            x = (i % 10) * multiple;
+            y = ((i - x) / 10) * multiple;
+            road = enviroment.create(x, y, centerMap.tiles[i].type);
+        }
     }
     
     monster = game.add.group();
