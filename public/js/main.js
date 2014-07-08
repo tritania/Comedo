@@ -103,17 +103,11 @@ function combat() {
 
 function combatStart() {
     var i,
-        xe,
-        ye,
-        y = player.y,
-        x = player.x,
         cr = 120;
     for (i = 0; i < enemies.length; i++) {
-        xe = enemies[i].x;
-        ye = enemies[i].y;
-        if ((x >= (xe - cr) && x <= (xe + cr)) &&  (y >= (ye - cr) && y <= (ye + cr))) {
+        if (distanceBetweenObj(enemies[i], player) > cr) {
             hostiles.push({sprite: enemies[i], index: i});
-            moveEnemy({x: x, y: y}, i);
+            moveEnemy(player, i);
         }
     }
 }
