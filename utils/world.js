@@ -1,6 +1,36 @@
 /*global module*/
 /*jslint plusplus: true */
 
+function getTile(direction, index) {
+    "use strict";
+    switch (direction) {
+    case 'NORTH':
+        if (index < 10) {
+            return false;
+        } else {
+            return index - 10;
+        }
+    case 'SOUTH':
+        if (index > 89) {
+            return false;
+        } else {
+            return index + 10;
+        }
+    case 'EAST':
+        if ((index + 1) % 10 === 0) {
+            return false;
+        } else {
+            return index + 1;
+        }
+    case 'WEST':
+        if (index % 10 === 0) {
+            return false;
+        } else {
+            return index - 1;
+        }
+    }
+}
+
 function rand(x, xp) {
     "use strict";
     return Math.floor((Math.random() * xp) + x);
