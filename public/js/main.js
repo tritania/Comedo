@@ -85,7 +85,14 @@ function update() {
 function combat() {
     var i;
     for (i = 0; i < hostiles.length; i++) {
+        if (distanceBetweenObj(player, hostiles[i].sprite) > 500) {
+            console.log("end combat");
+            hostiles[i].sprite.body.velocity.x = 0;
+            hostiles[i].sprite.body.velocity.y = 0;
+            hostiles.splice(i, i - 1);
+        } else {
         moveEnemy({x: player.x, y: player.y}, hostiles[i].index);
+        }
     }
 }
 

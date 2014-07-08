@@ -60,7 +60,7 @@ function moveEnemy(pointer, index) {
     if (y > enemies[index].y) {
         enemies[index].body.velocity.y = vY;
     } else if (y === enemies[index].y) {
-        enemies[index].body.velocity.xy = 0;
+        enemies[index].body.velocity.y = 0;
     } else {
         enemies[index].body.velocity.y = -vY;
     }
@@ -68,4 +68,7 @@ function moveEnemy(pointer, index) {
 
 function distanceBetween(point1, point2) {
     return Math.sqrt(Math.pow(point2 - point1, 2) + Math.pow(point2 - point1, 2));
+    
+}function distanceBetweenObj(point1, point2) {
+    return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
 }
