@@ -71,7 +71,12 @@ exports.createCentral = function () {
     var i,
         pos,
         j,
+        k,
         length;
+    
+    for (i = 0; i < core.tiles.length; i++) {
+        core.tiles[i] = {type: 'grass'};
+    }
     
     for (i = 0; i < coreSides.length; i++) {
         for (j = 0; j < coreSides[i]; j++) {
@@ -112,5 +117,22 @@ exports.createCentral = function () {
             }
         }
     }
+    
+    for (i = 0; i < core.tiles.length; i++) {
+        if (core.tiles[i].type === 'road') {
+            j = i;
+            while (getTile(core.tiles[j].direction, j) !== false) {
+                k = getTile(core.tiles[j].direction, j);
+                core.tiles[k] = {
+                    type: 'road',
+                    orientation: core.tiles[j].orientation,
+                    subtype: 'none',
+                    direction: core.tiles[j].direction
+                };
+                j = k;
+            }
+        }
+    }
+    
     return core;
 };

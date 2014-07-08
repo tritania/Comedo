@@ -47,9 +47,15 @@ function create() {
         x,
         y;
     for (i = 0; i < centerMap.tiles.length; i++) {
-        if (centerMap.tiles[i] !== null) {
-            x = (i % 10) * multiple;
-            y = ((i - x) / 10) * multiple;
+        if (centerMap.tiles[i].type === 'road') {
+            x = (i % 10);
+            if (x === 0) {
+                y = i;   
+            } else {
+                y = ((i - x) / 10);
+            }
+            x = x * multiple;
+            y = y * multiple;
             road = enviroment.create(x, y, centerMap.tiles[i].type);
         }
     }
