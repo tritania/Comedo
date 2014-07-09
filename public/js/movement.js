@@ -1,7 +1,11 @@
+var destination = null;
+
 function hasArrived() {
     var tmp = distanceBetweenObj(tracker, center = {x: 0, y: 0});
-    if (active && move &&  (tmp > dest -20) && (tmp < dest + 20)) {
+    if (active && move &&  (Math.abs(tmp - dest) < 20)) {
         
+        destination.kill();
+        destination = null;
         enviroment.setAll('body.velocity.x', 0);
         enviroment.setAll('body.velocity.y', 0);
         tracker.x = 0;
@@ -14,6 +18,11 @@ function hasArrived() {
 }
 
 function movePlayer(pointer) {
+    
+    if (destination !== null) {
+        destination.kill();
+    }
+    destination = enviroment.create(pointer.x, pointer.y, 'destination');
     
     move = true;
     

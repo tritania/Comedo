@@ -29,6 +29,7 @@ function preload() {
     game.load.image('bush', 'assets/bush.png');
     game.load.image('road', 'assets/road.png');
     game.load.image('tracker', 'assets/tracker.png');
+    game.load.image('destination', 'assets/destination.png');
 }
  
 function create() {
