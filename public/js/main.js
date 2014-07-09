@@ -12,13 +12,14 @@ var width = document.documentElement.clientWidth,
     hostiles = [],
     monster,
     z,
+    tracker,
     active = false,
     dest = {x: 150, y: 150}, //destination
     game;
     //keyinput = game.input.keyboard.createCursorKeys();
 
 function createGame() {
-    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    game = new Phaser.Game(2750, 2750, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 }
 
 function preload() {
@@ -26,6 +27,7 @@ function preload() {
     game.load.spritesheet('zombie1', 'assets/zombie1.png', 30, 45);
     game.load.image('bush', 'assets/bush.png');
     game.load.image('road', 'assets/road.png');
+    game.load.image('tracker', 'assets/tracker.png');
 }
  
 function create() {
@@ -37,6 +39,7 @@ function create() {
     
     world = game.add.group();
     enviroment = game.add.group();
+    enviroment.enableBody = true;
     world.enableBody = true;
 /*    var testBush = world.create(20, 20, "bush");
     testBush.body.immovable = true;*/
@@ -46,6 +49,10 @@ function create() {
         road,
         x,
         y;
+        
+    tracker = enviroment.create(0, 0, 'tracker');
+    tracker.renderable = false;
+        
     for (i = 0; i < centerMap.tiles.length; i++) {
         if (centerMap.tiles[i].type === 'road') {
             x = (i % 10);
@@ -63,16 +70,16 @@ function create() {
     monster = game.add.group();
     monster.enableBody = true;
     
-    player = game.add.sprite(150, 150, 'player');
+    player = game.add.sprite(width/2, height/2, 'player');
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
     
     //currently for testing
-    var tmp = monster.create(150, 150, 'zombie1');
-    game.physics.arcade.enable(tmp);
-    tmp.body.collideWorldBounds = true;
-    tmp.bringToTop();
-    enemies.push(tmp);
+    //var tmp = monster.create(150, 150, 'zombie1');
+    //game.physics.arcade.enable(tmp);
+    //tmp.body.collideWorldBounds = true;
+    //tmp.bringToTop();
+    //enemies.push(tmp);
     
     active = true;
     
