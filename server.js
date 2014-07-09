@@ -24,9 +24,7 @@ io.sockets.on('connection', function (socket) {
         
     });
     socket.on('getmap', function (data) {
-        console.log(socket.id + " is requesting a map");
-        var map = worldgen.createCentral();
-        console.log("Server Map " + JSON.stringify(map));
+        var map = worldgen.createCentral(); //should save central chunk
         socket.emit("map", map);
     });
 });
