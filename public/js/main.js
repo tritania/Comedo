@@ -13,8 +13,9 @@ var width = document.documentElement.clientWidth,
     monster,
     z,
     tracker,
+    move = false,
     active = false,
-    dest = {x: 150, y: 150}, //destination
+    dest = {x: 0, y: 0}, //destination
     game;
     //keyinput = game.input.keyboard.createCursorKeys();
 
@@ -51,7 +52,6 @@ function create() {
         y;
         
     tracker = enviroment.create(0, 0, 'tracker');
-    tracker.renderable = false;
         
     for (i = 0; i < centerMap.tiles.length; i++) {
         if (centerMap.tiles[i].type === 'road') {

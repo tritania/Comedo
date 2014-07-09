@@ -1,16 +1,21 @@
 function hasArrived() {
-    if (active &&
-            (Math.abs(tracker.x) >= dest.x - 10 && Math.abs(tracker.x) <= dest.x + 10) &&
-            (Math.abs(tracker.y) >= dest.y - 10 && Math.abs(tracker.y) <= dest.y + 10)
-            ) {
+    var tmp = distanceBetweenObj(tracker, center = {x: 0, y: 0});
+    if (active && move &&  (tmp > dest -20) && (tmp < dest + 20)) {
+        
         enviroment.setAll('body.velocity.x', 0);
         enviroment.setAll('body.velocity.y', 0);
         tracker.x = 0;
         tracker.y = 0;
+        dest.x = 0;
+        dest.y = 0;
+        move = false;
     }
+
 }
 
 function movePlayer(pointer) {
+    
+    move = true;
     
     tracker.x = 0;
     tracker.y = 0;
@@ -18,28 +23,22 @@ function movePlayer(pointer) {
     enviroment.setAll('body.velocity.x', 0);
     enviroment.setAll('body.velocity.y', 0);
     
-    var x = pointer.x,
-        y = pointer.y,
-        dx = distanceBetween(x, player.x),
-        dy = distanceBetween(y, player.y),
+    var dx = Math.abs(pointer.x - player.x),
+        dy = Math.abs(pointer.y - player.y),
         angle = Math.atan(dy / dx),
         vX = Math.abs(Math.cos(angle) * 300),
         vY = Math.abs(Math.sin(angle) * 300);
     
-    dest = {x: dx, y: dy};
+    dest = distanceBetweenObj(pointer, player);
     
-    if (x > player.x) {
+    if (pointer.x > player.x) { 
         enviroment.setAll('body.velocity.x', -vX);
-    } else if (x === player.x) {
-        enviroment.setAll('body.velocity.x', 0);
-    } else {
+    }else {
         enviroment.setAll('body.velocity.x', vX);
     }
    
-    if (y > player.y) {
+    if (pointer.y > player.y) {
         enviroment.setAll('body.velocity.y', -vY);
-    } else if (y === player.y) {
-        enviroment.setAll('body.velocity.y', 0);
     } else {
         enviroment.setAll('body.velocity.y', vY);
     }
