@@ -133,12 +133,12 @@ function combatStart() {
 }
 
 function colhandle() {
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
+    enviroment.setAll('body.velocity.x', 0);
+    enviroment.setAll('body.velocity.y', 0);
 }
 
 function comhandle() {
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
+    enviroment.setAll('body.velocity.x', 0);
+    enviroment.setAll('body.velocity.y', 0);
 }
 

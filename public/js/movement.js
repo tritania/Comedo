@@ -7,7 +7,9 @@ function hasArrived() {
         destination.kill();
         destination = null;
         enviroment.setAll('body.velocity.x', 0);
-        enviroment.setAll('body.velocity.y', 0);
+        enviroment.setAll('body.velocity.y', 0);        
+        monster.setAll('body.velocity.x', 0);
+        monster.setAll('body.velocity.y', 0);
         tracker.x = 0;
         tracker.y = 0;
         dest.x = 0;
@@ -32,6 +34,9 @@ function movePlayer(pointer) {
     enviroment.setAll('body.velocity.x', 0);
     enviroment.setAll('body.velocity.y', 0);
     
+    monster.setAll('body.velocity.x', 0);
+    monster.setAll('body.velocity.y', 0);
+    
     var dx = Math.abs(pointer.x - player.x),
         dy = Math.abs(pointer.y - player.y),
         angle = Math.atan(dy / dx),
@@ -42,14 +47,18 @@ function movePlayer(pointer) {
     
     if (pointer.x > player.x) { 
         enviroment.setAll('body.velocity.x', -vX);
+        monster.setAll('body.velocity.x', -vX);
     }else {
         enviroment.setAll('body.velocity.x', vX);
+        monster.setAll('body.velocity.x', vX);
     }
    
     if (pointer.y > player.y) {
         enviroment.setAll('body.velocity.y', -vY);
+        monster.setAll('body.velocity.y', -vY);
     } else {
         enviroment.setAll('body.velocity.y', vY);
+        monster.setAll('body.velocity.y', vY);
     }
 }
 
