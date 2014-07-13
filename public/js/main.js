@@ -19,6 +19,7 @@ var width = document.documentElement.clientWidth,
     hostiles = [],
     monster,
     z,
+    p,
     tracker,
     move = false,
     active = false,
@@ -82,16 +83,10 @@ function create() {
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
     
-    //currently for testing
-    //var tmp = monster.create(150, 150, 'zombie1');
-    //game.physics.arcade.enable(tmp);
-    //tmp.body.collideWorldBounds = true;
-    //tmp.bringToTop();
-    //enemies.push(tmp);
-    
     active = true;
     
     z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+    p = game.input.keyboard.addKey(Phaser.Keyboard.P);
 }
  
 function update() {
@@ -103,6 +98,14 @@ function update() {
         game.physics.arcade.enable(tmp);
         tmp.body.collideWorldBounds = true;
         enemies.push(tmp);
+    } 
+    if (p.isDown) {
+        if (game.paused === true) {
+            game.paused = false;
+        } else {
+            game.paused = true;   
+        }
+        
     }
     combatStart();
     combat();
