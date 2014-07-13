@@ -28,13 +28,12 @@ var width = document.documentElement.clientWidth,
     //keyinput = game.input.keyboard.createCursorKeys();
 
 function createGame() {
-    game = new Phaser.Game(2750, 2750, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 }
 
 function preload() {
     game.load.spritesheet('player', 'assets/player.png', 30, 45);
     game.load.spritesheet('zombie1', 'assets/zombie1.png', 30, 45);
-    game.load.image('bush', 'assets/bush.png');
     game.load.image('road', 'assets/road.png');
     game.load.image('tracker', 'assets/tracker.png');
     game.load.image('destination', 'assets/destination.png');
@@ -66,7 +65,7 @@ function create() {
         if (centerMap.tiles[i].type === 'road') {
             x = (i % 10);
             if (x === 0) {
-                y = i;   
+                y = i;
             } else {
                 y = ((i - x) / 10);
             }
@@ -79,19 +78,24 @@ function create() {
     monster = game.add.group();
     monster.enableBody = true;
     
-    player = game.add.sprite(width/2, height/2, 'player');
+    player = game.add.sprite(width / 2, height / 2, 'player');
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
     
     active = true;
     
     z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+<<<<<<< HEAD
     p = game.input.keyboard.addKey(Phaser.Keyboard.P);
+=======
+    
+    game.physics.arcade.overlap(player, enviroment, tileTracker, null, this);
+>>>>>>> origin/master
 }
  
 function update() {
-    game.physics.arcade.collide(player, world, colhandle);
-    game.physics.arcade.collide(player, monster, comhandle);
+//    game.physics.arcade.collide(player, world, colhandle);
+//    game.physics.arcade.collide(player, monster, comhandle);
     hasArrived();
     if (z.isDown) {
         var tmp = monster.create(150, 150, 'zombie1');
@@ -119,7 +123,7 @@ function combat() {
             hostiles[i].sprite.body.velocity.y = 0;
             hostiles.splice(i, i - 1);
         } else {
-        moveEnemy({x: player.x, y: player.y}, hostiles[i].index);
+            moveEnemy({x: player.x, y: player.y}, hostiles[i].index);
         }
     }
 }
@@ -136,12 +140,16 @@ function combatStart() {
 }
 
 function colhandle() {
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
+    enviroment.setAll('body.velocity.x', 0);
+    enviroment.setAll('body.velocity.y', 0);
 }
 
 function comhandle() {
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
+    enviroment.setAll('body.velocity.x', 0);
+    enviroment.setAll('body.velocity.y', 0);
+}
+
+function tileTracker(player, tile) {
+  //use to keep track of current chunk tile.
 }
 
