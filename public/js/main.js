@@ -46,12 +46,8 @@ function create() {
     
     game.input.onDown.add(movePlayer, this);
     
-    world = game.add.group();
     enviroment = game.add.group();
     enviroment.enableBody = true;
-    world.enableBody = true;
-/*    var testBush = world.create(20, 20, "bush");
-    testBush.body.immovable = true;*/
     
     var i,
         multiple = 275,
@@ -85,12 +81,9 @@ function create() {
     active = true;
     
     z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
-<<<<<<< HEAD
     p = game.input.keyboard.addKey(Phaser.Keyboard.P);
-=======
     
     game.physics.arcade.overlap(player, enviroment, tileTracker, null, this);
->>>>>>> origin/master
 }
  
 function update() {
@@ -100,7 +93,6 @@ function update() {
     if (z.isDown) {
         var tmp = monster.create(150, 150, 'zombie1');
         game.physics.arcade.enable(tmp);
-        tmp.body.collideWorldBounds = true;
         enemies.push(tmp);
     } 
     if (p.isDown) {
@@ -119,8 +111,8 @@ function combat() {
     var i;
     for (i = 0; i < hostiles.length; i++) {
         if (distanceBetweenObj(player, hostiles[i].sprite) > 500) {
-            hostiles[i].sprite.body.velocity.x = 0;
-            hostiles[i].sprite.body.velocity.y = 0;
+//            hostiles[i].sprite.body.velocity.x = 0;
+//            hostiles[i].sprite.body.velocity.y = 0;
             hostiles.splice(i, i - 1);
         } else {
             moveEnemy({x: player.x, y: player.y}, hostiles[i].index);

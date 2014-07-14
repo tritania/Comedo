@@ -63,7 +63,7 @@ function movePlayer(pointer) {
 }
 
 function moveEnemy(pointer, index) {
-    var x = pointer.x,
+/*    var x = pointer.x,
         y = pointer.y,
         dx = distanceBetween(x, enemies[index].x),
         dy = distanceBetween(y, enemies[index].y),
@@ -85,7 +85,7 @@ function moveEnemy(pointer, index) {
         enemies[index].body.velocity.y = 0;
     } else {
         enemies[index].body.velocity.y = -vY;
-    }
+    }*/
 }
 
 function distanceBetween(point1, point2) {
