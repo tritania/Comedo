@@ -1,10 +1,4 @@
-/*jslint node: true*/
-/*global io, Phaser, preload, create, update*/
-/*jslint plusplus: true */
-"use strict";
-
 window.addEventListener("keydown", function (e) {
-    // space and arrow keys
     if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
     }
@@ -58,16 +52,23 @@ function create() {
     tracker = enviroment.create(0, 0, 'tracker');
         
     for (i = 0; i < centerMap.tiles.length; i++) {
-        if (centerMap.tiles[i].type === 'road') {
-            x = (i % 10);
-            if (x === 0) {
-                y = i;
-            } else {
-                y = ((i - x) / 10);
-            }
-            x = x * multiple;
-            y = y * multiple;
+        x = (i % 10);
+        if (x === 0) {
+            y = i;
+        } else {
+            y = ((i - x) / 10);
+        }
+        x = x * multiple;
+        y = y * multiple;
+        
+        switch (centerMap.tiles[i].type) {
+        
+        case 'road':
             road = enviroment.create(x, y, centerMap.tiles[i].type);
+            break;
+        default:
+            break;
+
         }
     }
     
@@ -76,7 +77,6 @@ function create() {
     
     player = game.add.sprite(width / 2, height / 2, 'player');
     game.physics.arcade.enable(player);
-    player.body.collideWorldBounds = true;
     
     active = true;
     
@@ -87,19 +87,19 @@ function create() {
 }
  
 function update() {
-//    game.physics.arcade.collide(player, world, colhandle);
-//    game.physics.arcade.collide(player, monster, comhandle);
+    //game.physics.arcade.collide(player, world, colhandle); commented out until the world group is added to terrain generation.
+    game.physics.arcade.collide(player, monster, comhandle);
     hasArrived();
     if (z.isDown) {
         var tmp = monster.create(150, 150, 'zombie1');
         game.physics.arcade.enable(tmp);
         enemies.push(tmp);
-    } 
+    }
     if (p.isDown) {
         if (game.paused === true) {
             game.paused = false;
         } else {
-            game.paused = true;   
+            game.paused = true;
         }
         
     }
@@ -111,8 +111,6 @@ function combat() {
     var i;
     for (i = 0; i < hostiles.length; i++) {
         if (distanceBetweenObj(player, hostiles[i].sprite) > 500) {
-//            hostiles[i].sprite.body.velocity.x = 0;
-//            hostiles[i].sprite.body.velocity.y = 0;
             hostiles.splice(i, i - 1);
         } else {
             moveEnemy({x: player.x, y: player.y}, hostiles[i].index);
