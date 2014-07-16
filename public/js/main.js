@@ -113,18 +113,19 @@ function combat() {
         if (distanceBetweenObj(player, hostiles[i].sprite) > 500) {
             hostiles.splice(i, i - 1);
         } else {
-            moveEnemy({x: player.x, y: player.y}, hostiles[i].index);
+            moveEnemy(player, enemies[hostiles[i].index]);
         }
     }
 }
 
 function combatStart() {
     var i,
-        cr = 120;
+        cr = 220;
     for (i = 0; i < enemies.length; i++) {
-        if (distanceBetweenObj(enemies[i], player) > cr) {
+        if (distanceBetweenObj(enemies[i], player) < cr) {
+            console.log("combat");
             hostiles.push({sprite: enemies[i], index: i});
-            moveEnemy(player, i);
+            moveEnemy(player, enemies[i]);
         }
     }
 }

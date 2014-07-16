@@ -1,7 +1,7 @@
 var destination = null;
 
 function hasArrived() {
-    var tmp = distanceBetweenObj(tracker, center = {x: 0, y: 0});
+    var tmp = distanceBetweenObj(tracker, {x: 0, y: 0});
     if (active && move &&  (Math.abs(tmp - dest) < 20)) {
         
         destination.kill();
@@ -62,30 +62,31 @@ function movePlayer(pointer) {
     }
 }
 
-function moveEnemy(pointer, index) {
-/*    var x = pointer.x,
-        y = pointer.y,
-        dx = distanceBetween(x, enemies[index].x),
-        dy = distanceBetween(y, enemies[index].y),
-        angle = Math.atan(dy / dx),
-        vX = Math.abs(Math.cos(angle) * 125),
-        vY = Math.abs(Math.sin(angle) * 125);
+function moveEnemy(pointer, enemy) {
+
+    enemy.body.velocity.x = 0;
+    enemy.body.velocity.y = 0;
     
-    if (x > enemies[index].x) {
-        enemies[index].body.velocity.x = vX;
-    } else if (x === enemies[index].x) {
-        enemies[index].body.velocity.x = 0;
-    } else {
-        enemies[index].body.velocity.x = -vX;
+    console.log("velocity is: " + enemy.body.velocity.x);
+    
+    var dx = Math.abs(pointer.x - enemy.x),
+        dy = Math.abs(pointer.y - enemy.y),
+        angle = Math.atan(dy / dx),
+        vX = Math.abs(Math.cos(angle) * 200),
+        vY = Math.abs(Math.sin(angle) * 200);
+        
+    if (pointer.x > enemy.x) { 
+        enemy.body.velocity.x + vX;
+    }else {
+        enemy.body.velocity.x - vX;
     }
    
-    if (y > enemies[index].y) {
-        enemies[index].body.velocity.y = vY;
-    } else if (y === enemies[index].y) {
-        enemies[index].body.velocity.y = 0;
+    if (pointer.y > enemy.y) {
+        enemy.body.velocity.y + vY;
     } else {
-        enemies[index].body.velocity.y = -vY;
-    }*/
+        enemy.body.velocity.y - vY;
+    }
+    
 }
 
 function distanceBetween(point1, point2) {
