@@ -62,6 +62,10 @@ function movePlayer(pointer) {
     }
 }
 
+function setEnemyVelocity(entity) {
+   
+}
+
 function moveEnemy(pointer, enemy) {
 
     enemy.body.velocity.x = 0;
@@ -72,19 +76,19 @@ function moveEnemy(pointer, enemy) {
     var dx = Math.abs(pointer.x - enemy.x),
         dy = Math.abs(pointer.y - enemy.y),
         angle = Math.atan(dy / dx),
-        vX = Math.abs(Math.cos(angle) * 200),
-        vY = Math.abs(Math.sin(angle) * 200);
+        vX = Math.abs(Math.cos(angle) * 110),
+        vY = Math.abs(Math.sin(angle) * 110);
         
     if (pointer.x > enemy.x) { 
-        enemy.body.velocity.x + vX;
+        enemy.body.velocity.x = vX;
     }else {
-        enemy.body.velocity.x - vX;
+        enemy.body.velocity.x = -vX;
     }
    
     if (pointer.y > enemy.y) {
-        enemy.body.velocity.y + vY;
+        enemy.body.velocity.y = vY;
     } else {
-        enemy.body.velocity.y - vY;
+        enemy.body.velocity.y = -vY;
     }
     
 }

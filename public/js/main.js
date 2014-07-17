@@ -7,6 +7,7 @@ window.addEventListener("keydown", function (e) {
 var width = document.documentElement.clientWidth,
     height = window.innerHeight,
     player,
+    players = [],
     world,
     enviroment,
     enemies = [],
@@ -77,6 +78,7 @@ function create() {
     
     player = game.add.sprite(width / 2, height / 2, 'player');
     game.physics.arcade.enable(player);
+    player.body.immovable = true;
     
     active = true;
     
@@ -88,7 +90,7 @@ function create() {
  
 function update() {
     //game.physics.arcade.collide(player, world, colhandle); commented out until the world group is added to terrain generation.
-    game.physics.arcade.collide(player, monster, comhandle);
+    game.physics.arcade.collide(player, monster, comhandle); //check for an overlap instead
     hasArrived();
     if (z.isDown) {
         var tmp = monster.create(150, 150, 'zombie1');
@@ -110,7 +112,7 @@ function update() {
 function combat() {
     var i;
     for (i = 0; i < hostiles.length; i++) {
-        if (distanceBetweenObj(player, hostiles[i].sprite) > 500) {
+        if (distanceBetweenObj(player, hostiles[i].sprite) > 700) { //will need to be updated for tiles
             hostiles.splice(i, i - 1);
         } else {
             moveEnemy(player, enemies[hostiles[i].index]);
@@ -120,11 +122,11 @@ function combat() {
 
 function combatStart() {
     var i,
-        cr = 220;
+        cr = 400;
     for (i = 0; i < enemies.length; i++) {
         if (distanceBetweenObj(enemies[i], player) < cr) {
             console.log("combat");
-            hostiles.push({sprite: enemies[i], index: i});
+            hostiles.push({sprite: enemies[i], index: i, evx: 0, evy: 0, ev: 0, ex: 0});
             moveEnemy(player, enemies[i]);
         }
     }
