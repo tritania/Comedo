@@ -28,7 +28,32 @@ function array2d(rows) {
 
 exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
-    var core;
+    var core,
+        minlim = rand(2, 10), //min and max lim for POI generation
+        maxlim = rand(11, 21),
+        total = rand(minlim, maxlim),
+        tiles = array2d(10), //creates all the tiles in the chunk
+        i,
+        j,
+        x,
+        y;
+    
+    for (i = 0; i < 10; i++) { //prevents the need for undefined checks
+        for (i = 0; i < 10; i++) {
+            tiles[i][j] = null;
+        }
+    }
+    
+    for (i = 0; i < total; i++) { //fills out the POI's
+        x = rand(0, 9);
+        y = rand(0, 9);
+        
+        if (tiles[x][y] === null) {
+            tiles[x][y] = 'POI';
+        } else {
+            i--;
+        }
+    }
     
     return core;
 };
