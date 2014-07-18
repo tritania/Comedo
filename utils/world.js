@@ -16,6 +16,31 @@ function sumArray(arr) {
     return sum;
 }
 
+function getTile(arr, x, y) {
+    "use strict";
+    var xmax = x + 1,
+        xmin = x - 1,
+        ymax = y + 1,
+        ymin = y - 1;
+    if (arr[x][y] === 'POI') {
+        return false; //can't overwrite a building
+    } else if (arr[x][y] === 'road') {
+        return true; //if its a road its already valid
+    } else if (xmin < 0 || ymin < 0) {
+        return false; //check bounds of tile array
+    } else if (arr[xmin][y] === 'road' && arr[xmin][ymin] === 'road' && arr[x][ymin]) { //zone checking begins
+        return false;
+    } else if (arr[x][ymin] === 'road' && arr[xmax][ymin] === 'road' && arr[xmax][y]) {
+        return false;
+    } else if (arr[x][ymax] === 'road' && arr[xmax][ymax] === 'road' && arr[xmax][y]) {
+        return false;
+    } else if (arr[x][ymax] === 'road' && arr[xmin][ymax] === 'road' && arr[x][ymax]) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function array2d(rows) {
     "use strict";
     var arr = [],
