@@ -1,6 +1,13 @@
 /*global module, exports*/
 /*jslint plusplus: true */
 
+function getDistance(obj1, obj2) {
+    "use strict";
+    var xd = Math.abs(obj2.x - obj1.x),
+        yd = Math.abs(obj2.y - obj1.y);
+    return Math.sqrt((xd * xd) + (yd * yd));
+}
+
 function rand(x, xp) {
     "use strict";
     return Math.floor((Math.random() * xp) + x);
@@ -61,7 +68,9 @@ exports.createCentral = function () { //once sent the player can keep the core c
         i,
         j,
         x,
-        y;
+        y,
+        pois = [],
+        current;
     
     for (i = 0; i < 10; i++) { //prevents the need for undefined checks
         for (i = 0; i < 10; i++) {
@@ -75,9 +84,15 @@ exports.createCentral = function () { //once sent the player can keep the core c
         
         if (tiles[x][y] === null) {
             tiles[x][y] = 'POI';
+            pois.push({x: x, y: y}); //for branching roads
         } else {
             i--;
         }
+    }
+    
+    current = pois[0]; //splice 
+    for (i = 0; i < total; i++) {
+        pois[i].distance = getDistance(current, pois[i]); //calculate which one is closest
     }
     
     return core;
