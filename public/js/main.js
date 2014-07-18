@@ -20,6 +20,7 @@ var width = document.documentElement.clientWidth,
     active = false,
     dest = {x: 0, y: 0}, //destination
     game;
+    map = []; //will hold all the chunks around the player
     //keyinput = game.input.keyboard.createCursorKeys();
 
 function createGame() {

@@ -16,7 +16,7 @@ function sumArray(arr) {
     return sum;
 }
 
-exports.createCentral = function () {
+exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
     var core;
     
