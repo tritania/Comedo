@@ -29,7 +29,7 @@ function getTile(arr, x, y) {
         xmin = x - 1,
         ymax = y + 1,
         ymin = y - 1;
-    if (arr[x][y] === 'POI') {
+    if (arr[x][y] !== null) {
         return false; //can't overwrite a building
     } else if (arr[x][y] === 'road') {
         return true; //if its a road its already valid
@@ -89,9 +89,14 @@ exports.createCentral = function () { //once sent the player can keep the core c
         tiles = array2d(10), //creates all the tiles in the chunk
         i,
         j,
+        dir,
         x,
         y,
         pois = [],
+        min = {
+            distance: 0,
+            index: 0
+        }, //keep track of the closest vector during looping
         current, //current POI. Both objects x: y: for tracking
         closest; //POI road is branching to
     
@@ -114,8 +119,18 @@ exports.createCentral = function () { //once sent the player can keep the core c
     }
     
     current = pois[0]; //splice 
-    for (i = 0; i < total; i++) {
-        pois[i].distance = getDistance(current, pois[i]); //calculate which one is closest
+    pois.splice(0, 1);
+    min.distance = 0;
+    for (i = 0; i < pois.length; i++) {
+        if (min.distance < getDistance(current, pois[i])) {
+            min.index = i;
+        }
+    }
+    
+    closest = pois[min];
+    
+    while (pois.length !== 0) {
+        dir = getDir(current, closest);
     }
     
     return core;
