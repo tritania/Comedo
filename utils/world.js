@@ -58,6 +58,28 @@ function array2d(rows) {
     return arr;
 }
 
+function getDir(start, end) {
+    "use strict";
+    var dir;
+    if (start.x > end.x) {
+        dir.x = "WEST";
+    } else if (start.x === end.x) {
+        dir.x = null;
+    } else {
+        dir.x = "EAST";
+    }
+    
+    if (start.y > end.y) {
+        dir.y = "SOUTH";
+    } else if (start.y === end.y) {
+        dir.y = null;
+    } else {
+        dir.y = "NORTH";
+    }
+    
+    return dir;
+}
+
 exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
     var core,
@@ -70,7 +92,8 @@ exports.createCentral = function () { //once sent the player can keep the core c
         x,
         y,
         pois = [],
-        current;
+        current, //current POI. Both objects x: y: for tracking
+        closest; //POI road is branching to
     
     for (i = 0; i < 10; i++) { //prevents the need for undefined checks
         for (i = 0; i < 10; i++) {
