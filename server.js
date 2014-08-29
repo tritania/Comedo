@@ -22,17 +22,21 @@ console.log("Comedo is initializing...");
 var rooms = []; //rooms need to contain maps, and socket ids
 
 io.sockets.on('connection', function (socket) {
+    
     socket.on('join', function (data) {
         console.log("User " + socket.id + " has connected");
     });
+    
     socket.on('getmap', function (data) {
         rooms[socket.id] = {players: 1}; //no point in creating a room until they click play
         var map = worldgen.createCentral(); //should save central chunk
         socket.emit("map", map);
     });
+    
     socket.on('join_request', function (data) {
         //check if room is around
     });
+    
     socket.on('disconnect', function () { //will also need to check if player is active in anyone elses room
         var pos = rooms.indexOf(socket.id);
         console.log("User " + rooms[socket.id] + " disconnected with id " + socket.id);
