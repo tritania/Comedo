@@ -1,9 +1,22 @@
 /*global module, exports, console*/
 /*jslint plusplus: true */
 
-function getRandomInt(min, max) {
+function seed() {
     "use strict";
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    var seeds = [],
+        x,
+        i,
+        tmp,
+        val;
+    
+    for (i = 0; i < 4; i++) {
+        val = Math.random() * 1111;
+        tmp = Math.sin(val++) * 10000;
+        tmp = (tmp - Math.floor(tmp)) * 100;
+        seeds.push(tmp);
+    }
+    
+    return seeds;
 }
 
 function array2d(rows) {
@@ -18,11 +31,7 @@ function array2d(rows) {
     
 function diamondSquare(arr, depth, final) { //first depth is always 0
     "use strict"; //do it by expanding grids
-    
-    if (depth > final) {
-        return arr;
-    }
-    
+        
     var size = arr.length,
         it = 0, //rows
         itt = 0, //columns
@@ -30,8 +39,6 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         spacer = 0, //defines where to place arr values
         tmp = array2d(size), //create tmp array for width expansion
         tmp2;// = array2d(depth + 3); //create tmp array for width expansion
-    
-    console.log(JSON.stringify(tmp2));
     
     //expand matrix's width
     for (it = 0; it < size; it++) {
@@ -42,7 +49,6 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         spacer = 0;
     }
     
-    console.log("Step One" + JSON.stringify(tmp));
     
     //fill matrix width
     for (it = 0; it < size; it++) {
@@ -54,7 +60,6 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         tmp[it].splice(tmp[it].length - 1, 1);
     }
     
-    console.log("Step Two" + JSON.stringify(tmp));
     
     //expand matrix height
     tmp2 = array2d(tmp[0].length);
@@ -67,7 +72,6 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         spacer = spacer + 2;
     }
     
-    console.log("Step Three" + JSON.stringify(tmp2));
     
     //fill sides
     fill = 0;
@@ -80,7 +84,6 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         it++;
     }
     
-    console.log("Step Four" + JSON.stringify(tmp2));
     
     //fill center
     for (it = 1; it < size; it++) { //start on second row as the center will be in the middle
@@ -91,17 +94,24 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         it++;
     }
     
-    console.log("Step Five" + JSON.stringify(tmp2));
-    
-    depth++;
-    
-    diamondSquare(tmp2, depth, final);
+    if (depth === final) {
+        return tmp2;
+    } else {
+        depth++;
+        return diamondSquare(tmp2, depth, final);
+    }
 }
 
 exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
-     
-    var core; //core map chunk
+    
+    var seeds = seed(),
+        preCore = array2d(2),
+        core;  //core map chunk
+    
+    preCore = [[seeds[0], seeds[1]], [seeds[2], seeds[3]]];
+    
+    core = diamondSquare(preCore, 0, 3);
     
     return core;
 };
