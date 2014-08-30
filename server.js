@@ -22,9 +22,10 @@ console.log("Comedo is initializing...");
 var rooms = []; //rooms need to contain maps, and socket ids
 
 io.sockets.on('connection', function (socket) {
+    console.log("User " + socket.id + " has connected");
     
     socket.on('join', function (data) {
-        console.log("User " + socket.id + " has connected");
+        console.log("User " + socket.id + " has joined the game");
     });
     
     socket.on('getmap', function (data) {
