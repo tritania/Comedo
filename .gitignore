@@ -1,2 +1,3 @@
 *.sh
 utils/build
+node_modules
