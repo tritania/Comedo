@@ -22,6 +22,11 @@ var width = document.documentElement.clientWidth,
 function preload() {
     "use strict";
     game.load.spritesheet('player', 'assets/player.png', 30, 45);
+    game.load.spritesheet('test1', 'assets/test1.png', 30, 45);
+    game.load.spritesheet('test2', 'assets/test2.png', 30, 45);
+    game.load.spritesheet('test3', 'assets/test3.png', 30, 45);
+    game.load.spritesheet('test4', 'assets/test4.png', 30, 45);
+    game.load.spritesheet('test5', 'assets/test5.png', 30, 45);
 }
  
 function create() {
@@ -51,6 +56,7 @@ function update() {
  */
 function createGame(core) {
     "use strict";
+    preloaded.push(core);
     game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 }
 
