@@ -1,4 +1,12 @@
+/*jslint node: true*/
+/*global Phaser, core*/
+/*jslint plusplus: true */
+
+/**
+ * Stops the canvas from scrolling in other browsers
+ */
 window.addEventListener("keydown", function (e) {
+    "use strict";
     if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
     }
@@ -6,144 +14,43 @@ window.addEventListener("keydown", function (e) {
  
 var width = document.documentElement.clientWidth,
     height = window.innerHeight,
-    player,
+    game,
     players = [],
-    world,
-    enviroment,
-    enemies = [],
-    hostiles = [],
-    monster,
-    z,
-    p,
-    tracker,
-    move = false,
-    active = false,
-    dest = {x: 0, y: 0}, //destination
-    game;
-    map = []; //will hold all the chunks around the player
-    //keyinput = game.input.keyboard.createCursorKeys();
-
-function createGame() {
-    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-}
+    active = [], //viewable tiles
+    preloaded = []; //preloaded chunks
 
 function preload() {
+    "use strict";
     game.load.spritesheet('player', 'assets/player.png', 30, 45);
-    game.load.spritesheet('zombie1', 'assets/zombie1.png', 30, 45);
-    game.load.image('road', 'assets/road.png');
-    game.load.image('tracker', 'assets/tracker.png');
-    game.load.image('destination', 'assets/destination.png');
 }
  
 function create() {
+    "use strict";
+    //set up the canvas
+    var tmp_player;
     game.stage.backgroundColor = '#bbe6a7';
-    
     game.physics.startSystem(Phaser.Physics.ARCADE);
     
+    //player movement accross all devices
     game.input.onDown.add(movePlayer, this);
     
-    enviroment = game.add.group();
-    enviroment.enableBody = true;
-    
-    var i,
-        multiple = 275,
-        road,
-        x,
-        y;
-        
-    tracker = enviroment.create(0, 0, 'tracker');
-        
-    for (i = 0; i < centerMap.tiles.length; i++) {
-        x = (i % 10);
-        if (x === 0) {
-            y = i;
-        } else {
-            y = ((i - x) / 10);
-        }
-        x = x * multiple;
-        y = y * multiple;
-        
-        switch (centerMap.tiles[i].type) {
-        
-        case 'road':
-            road = enviroment.create(x, y, centerMap.tiles[i].type);
-            break;
-        default:
-            break;
-
-        }
-    }
-    
-    monster = game.add.group();
-    monster.enableBody = true;
-    
-    player = game.add.sprite(width / 2, height / 2, 'player');
-    game.physics.arcade.enable(player);
-    player.body.immovable = true;
-    
-    active = true;
-    
-    z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
-    p = game.input.keyboard.addKey(Phaser.Keyboard.P);
-    
-    game.physics.arcade.overlap(player, enviroment, tileTracker, null, this);
+    //load the player and push to players array
+    tmp_player = game.add.sprite(width / 2, height / 2, 'player');
+    game.physics.arcade.enable(tmp_player);
+    players.push(tmp_player);
 }
  
 function update() {
-    //game.physics.arcade.collide(player, world, colhandle); commented out until the world group is added to terrain generation.
-    game.physics.arcade.collide(player, monster, comhandle); //check for an overlap instead
-    hasArrived();
-    if (z.isDown) {
-        var tmp = monster.create(150, 150, 'zombie1');
-        game.physics.arcade.enable(tmp);
-        enemies.push(tmp);
-    }
-    if (p.isDown) {
-        if (game.paused === true) {
-            game.paused = false;
-        } else {
-            game.paused = true;
-        }
-        
-    }
-    combatStart();
-    combat();
+    "use strict";
+   
 }
 
-function combat() {
-    var i;
-    for (i = 0; i < hostiles.length; i++) {
-        if (distanceBetweenObj(player, hostiles[i].sprite) > 700) { //will need to be updated for tiles
-            hostiles.splice(i, i - 1);
-        } else {
-            moveEnemy(player, enemies[hostiles[i].index]);
-        }
-    }
-}
-
-function combatStart() {
-    var i,
-        cr = 400;
-    for (i = 0; i < enemies.length; i++) {
-        if (distanceBetweenObj(enemies[i], player) < cr) {
-            console.log("combat");
-            hostiles.push({sprite: enemies[i], index: i, evx: 0, evy: 0, ev: 0, ex: 0});
-            moveEnemy(player, enemies[i]);
-        }
-    }
-}
-
-function colhandle() {
-    enviroment.setAll('body.velocity.x', 0);
-    enviroment.setAll('body.velocity.y', 0);
-}
-
-function comhandle() {
-    enviroment.setAll('body.velocity.x', 0);
-    enviroment.setAll('body.velocity.y', 0);
-}
-
-function tileTracker(player, tile) {
-  //use to keep track of current chunk tile.
+/**
+ * Creates the html5 canvas 
+ * @param {Object} core The first chunk of the map.
+ */
+function createGame(core) {
+    "use strict";
+    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 }
 

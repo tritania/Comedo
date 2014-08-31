@@ -24,18 +24,10 @@ var rooms = []; //rooms need to contain maps, and socket ids
 io.sockets.on('connection', function (socket) {
     console.log("User " + socket.id + " has connected");
     
-    socket.on('join', function (data) {
-        console.log("User " + socket.id + " has joined the game");
-    });
-    
     socket.on('getmap', function (data) {
         rooms[socket.id] = {players: 1}; //no point in creating a room until they click play
         var map = worldgen.createCentral(); //should save central chunk
         socket.emit("map", map);
-    });
-    
-    socket.on('join_request', function (data) {
-        //check if room is around
     });
     
     socket.on('disconnect', function () { //will also need to check if player is active in anyone elses room
