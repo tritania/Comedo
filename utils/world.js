@@ -21,6 +21,30 @@ function seed() {
 
 function getChunkDir(range, chunk) {
     "use strict";
+    
+    if (range.x1 > chunk.x1) {
+        if (range.y1 === chunk.y1) {
+            return 3;
+        } else if (range.y1 > chunk.y1) {
+            return 2;
+        } else {
+            return 4;
+        }
+    } else if (range.x1 < chunk.x1) {
+        if (range.y1 === chunk.y1) {
+            return 7;
+        } else if (range.y1 > chunk.y1) {
+            return 2;
+        } else {
+            return 6;
+        }
+    } else {
+        if (range.y > chunk.y) {
+            return 1;
+        } else {
+            return 5;
+        }
+    }
 }
 
 /**
