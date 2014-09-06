@@ -19,6 +19,73 @@ function seed() {
     return seeds;
 }
 
+function getChunkDir(range, chunk) {
+    "use strict";
+}
+
+/**
+ * @param dir Direction of chunk 1 is north, 2 is northeast etc..
+ * @param seeds Seeds of the chunk this function is being called from
+ */
+function chunkSeeds(seeds, dir) {
+    "use strict";
+    
+    var core = [];
+    
+    switch (dir) {
+    case 1:
+        core.push(seeds[0] + seeds[2] / 2);
+        core.push(seeds[1] + seeds[3] / 2);
+        core.push(seeds[0]);
+        core.push(seeds[1]);
+        break;
+    case 2:
+        core.push(seeds[1] + seeds[3] / 2);
+        core.push(seeds[1] + seeds[2] / 2);
+        core.push(seeds[0] + seeds[1] / 2);
+        core.push(seeds[1]);
+        break;
+    case 3:
+        core.push(seeds[1]);
+        core.push(seeds[0] + seeds[1] / 2);
+        core.push(seeds[3]);
+        core.push(seeds[2] + seeds[3] / 2);
+        break;
+    case 4:
+        core.push(seeds[3]);
+        core.push(seeds[2] + seeds[3] / 2);
+        core.push(seeds[1] + seeds[3] / 2);
+        core.push(seeds[0] + seeds[3] / 2);
+        break;
+    case 5:
+        core.push(seeds[2]);
+        core.push(seeds[3]);
+        core.push(seeds[0] + seeds[2] / 2);
+        core.push(seeds[1] + seeds[3] / 2);
+        break;
+    case 6:
+        core.push(seeds[2] + seeds[3] / 2);
+        core.push(seeds[2]);
+        core.push(seeds[1] + seeds[2] / 2);
+        core.push(seeds[0] + seeds[2] / 2);
+        break;
+    case 7:
+        core.push(seeds[0] + seeds[1] / 2);
+        core.push(seeds[0]);
+        core.push(seeds[2] + seeds[3] / 2);
+        core.push(seeds[2]);
+        break;
+    case 8:
+        core.push(seeds[0] + seeds[3] / 2);
+        core.push(seeds[0] + seeds[2] / 2);
+        core.push(seeds[0] + seeds[1] / 2);
+        core.push(seeds[0]);
+        break;
+    }
+    
+    return core;
+}
+
 function array2d(rows) {
     "use strict";
     var arr = new Array(rows),

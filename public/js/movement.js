@@ -1,96 +1,47 @@
-var destination = null;
+var dest,
+    active;
 
 function hasArrived() {
-    var tmp = distanceBetweenObj(tracker, {x: 0, y: 0});
-    if (active && move &&  (Math.abs(tmp - dest) < 20)) {
-        
-        destination.kill();
-        destination = null;
-        enviroment.setAll('body.velocity.x', 0);
-        enviroment.setAll('body.velocity.y', 0);        
-        monster.setAll('body.velocity.x', 0);
-        monster.setAll('body.velocity.y', 0);
-        tracker.x = 0;
-        tracker.y = 0;
-        dest.x = 0;
-        dest.y = 0;
-        move = false;
+    if (active &&
+            (player.x >= dest.x - 10 && player.x <= dest.x + 10) &&
+            (player.y >= dest.y - 10 && player.y <= dest.y + 10)
+            ) {
+        player.body.velocity.x = 0;
+        player.body.velocity.y = 0;
     }
-
 }
 
 function movePlayer(pointer) {
     
-    if (destination !== null) {
-        destination.kill();
-    }
-    destination = enviroment.create(pointer.x, pointer.y, 'destination');
+    player.body.velocity.x = 0;
+    player.body.velocity.y = 0;
     
-    move = true;
-    
-    tracker.x = 0;
-    tracker.y = 0;
-    
-    enviroment.setAll('body.velocity.x', 0);
-    enviroment.setAll('body.velocity.y', 0);
-    
-    monster.setAll('body.velocity.x', 0);
-    monster.setAll('body.velocity.y', 0);
-    
-    var dx = Math.abs(pointer.x - player.x),
-        dy = Math.abs(pointer.y - player.y),
+    var x = pointer.x,
+        y = pointer.y,
+        active = true;
+        dx = distanceBetween(x, player.x),
+        dy = distanceBetween(y, player.y),
         angle = Math.atan(dy / dx),
         vX = Math.abs(Math.cos(angle) * 300),
         vY = Math.abs(Math.sin(angle) * 300);
     
-    dest = distanceBetweenObj(pointer, player);
+    dest = {x: x, y: y};
     
-    if (pointer.x > player.x) { 
-        enviroment.setAll('body.velocity.x', -vX);
-        monster.setAll('body.velocity.x', -vX);
-    }else {
-        enviroment.setAll('body.velocity.x', vX);
-        monster.setAll('body.velocity.x', vX);
-    }
-   
-    if (pointer.y > player.y) {
-        enviroment.setAll('body.velocity.y', -vY);
-        monster.setAll('body.velocity.y', -vY);
+    if (x > player.x) {
+        player.body.velocity.x = vX;
+    } else if (x === player.x) {
+        player.body.velocity.x = 0;
     } else {
-        enviroment.setAll('body.velocity.y', vY);
-        monster.setAll('body.velocity.y', vY);
-    }
-}
-
-function setEnemyVelocity(entity) {
-   
-}
-
-function moveEnemy(pointer, enemy) {
-
-    enemy.body.velocity.x = 0;
-    enemy.body.velocity.y = 0;
-    
-    console.log("velocity is: " + enemy.body.velocity.x);
-    
-    var dx = Math.abs(pointer.x - enemy.x),
-        dy = Math.abs(pointer.y - enemy.y),
-        angle = Math.atan(dy / dx),
-        vX = Math.abs(Math.cos(angle) * 110),
-        vY = Math.abs(Math.sin(angle) * 110);
-        
-    if (pointer.x > enemy.x) { 
-        enemy.body.velocity.x = vX;
-    }else {
-        enemy.body.velocity.x = -vX;
+        player.body.velocity.x = -vX;
     }
    
-    if (pointer.y > enemy.y) {
-        enemy.body.velocity.y = vY;
+    if (y > player.y) {
+        player.body.velocity.y = vY;
+    } else if (y === player.y) {
+        player.body.velocity.xy = 0;
     } else {
-        enemy.body.velocity.y = -vY;
+        player.body.velocity.y = -vY;
     }
-    
 }
 
 function distanceBetween(point1, point2) {
