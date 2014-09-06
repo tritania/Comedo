@@ -198,11 +198,22 @@ exports.createCentral = function () { //once sent the player can keep the core c
     
     var seeds = seed(),
         preCore = array2d(2),
+        postDS,
         core;  //core map chunk
     
     preCore = [[seeds[0], seeds[1]], [seeds[2], seeds[3]]];
     
-    core = diamondSquare(preCore, 0, 3);
+    postDS = diamondSquare(preCore, 0, 3);
+    
+    core = {
+        range: [{
+            x1: 0,
+            x2: 16,
+            y1: 0,
+            y2: 16
+        }],
+        tiles: postDS
+    };
     
     return core;
 };
