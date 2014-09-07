@@ -35,7 +35,6 @@ function movePlayer(pointer) {
         vY = Math.abs(Math.sin(angle) * 300);
     
     dest = {x: x, y: y};
-    console.log(JSON.stringify(dest));
     dest_e = game.add.sprite(dest.x, dest.y, 'dest');
     
     if (x > player.x) {

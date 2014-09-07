@@ -2,9 +2,9 @@ function join() {
     document.getElementById("joined").style.visibility = "hidden";
     var value = document.getElementById("gid").value;
     if (value === "") {
-        getMapData();
+        getMap();
     } else {
-        getMapData();
+        getMap();
     }
 }
 

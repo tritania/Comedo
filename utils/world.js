@@ -19,97 +19,6 @@ function seed() {
     return seeds;
 }
 
-function getChunkDir(range, chunk) {
-    "use strict";
-    
-    if (range.x1 > chunk.x1) {
-        if (range.y1 === chunk.y1) {
-            return 3;
-        } else if (range.y1 > chunk.y1) {
-            return 2;
-        } else {
-            return 4;
-        }
-    } else if (range.x1 < chunk.x1) {
-        if (range.y1 === chunk.y1) {
-            return 7;
-        } else if (range.y1 > chunk.y1) {
-            return 2;
-        } else {
-            return 6;
-        }
-    } else {
-        if (range.y > chunk.y) {
-            return 1;
-        } else {
-            return 5;
-        }
-    }
-}
-
-/**
- * @param dir Direction of chunk 1 is north, 2 is northeast etc..
- * @param seeds Seeds of the chunk this function is being called from
- */
-function chunkSeeds(seeds, dir) {
-    "use strict";
-    
-    var core = [];
-    
-    switch (dir) {
-    case 1:
-        core.push(seeds[0] + seeds[2] / 2);
-        core.push(seeds[1] + seeds[3] / 2);
-        core.push(seeds[0]);
-        core.push(seeds[1]);
-        break;
-    case 2:
-        core.push(seeds[1] + seeds[3] / 2);
-        core.push(seeds[1] + seeds[2] / 2);
-        core.push(seeds[0] + seeds[1] / 2);
-        core.push(seeds[1]);
-        break;
-    case 3:
-        core.push(seeds[1]);
-        core.push(seeds[0] + seeds[1] / 2);
-        core.push(seeds[3]);
-        core.push(seeds[2] + seeds[3] / 2);
-        break;
-    case 4:
-        core.push(seeds[3]);
-        core.push(seeds[2] + seeds[3] / 2);
-        core.push(seeds[1] + seeds[3] / 2);
-        core.push(seeds[0] + seeds[3] / 2);
-        break;
-    case 5:
-        core.push(seeds[2]);
-        core.push(seeds[3]);
-        core.push(seeds[0] + seeds[2] / 2);
-        core.push(seeds[1] + seeds[3] / 2);
-        break;
-    case 6:
-        core.push(seeds[2] + seeds[3] / 2);
-        core.push(seeds[2]);
-        core.push(seeds[1] + seeds[2] / 2);
-        core.push(seeds[0] + seeds[2] / 2);
-        break;
-    case 7:
-        core.push(seeds[0] + seeds[1] / 2);
-        core.push(seeds[0]);
-        core.push(seeds[2] + seeds[3] / 2);
-        core.push(seeds[2]);
-        break;
-    case 8:
-        core.push(seeds[0] + seeds[3] / 2);
-        core.push(seeds[0] + seeds[2] / 2);
-        core.push(seeds[0] + seeds[1] / 2);
-        core.push(seeds[0]);
-        break;
-    }
-    
-    return core;
-}
-
 function array2d(rows) {
     "use strict";
     var arr = new Array(rows),
@@ -193,6 +102,67 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
     }
 }
 
+/**
+ * @param range Range of the chunk being requested
+ * @param core Core seeds
+ */
+function getChunk(range, core) {
+    "use strict";
+    var chunk,//coords of core chunk
+        post,
+        seeds,
+        h = range.x / 17, //horizontal chunks from core
+        v = range.y / 17, //vertical chunks from core
+        tmp = [0, 1, 2, 3],
+        i;
+    
+    for (i = 0; i < Math.abs(h); i++) {
+        if (h > 0) {
+            tmp[0] = core[1];
+            tmp[2] = core[3];
+            tmp[1] = ((core[0] + core[1]) / 2);
+            tmp[3] = ((core[2] + core[3]) / 2);
+            //expanding right of core
+        } else {
+            tmp[1] = core[0];
+            tmp[3] = core[2];
+            tmp[1] = ((core[0] + core[1]) / 2);
+            tmp[3] = ((core[2] + core[3]) / 2);
+            //expanding left of core
+        }
+        core = tmp.slice(0);
+    }
+    
+    for (i = 0; i < Math.abs(v); i++) {
+        if (v > 0) {
+            tmp[0] = core[2];
+            tmp[1] = core[3];
+            tmp[2] = ((core[0] + core[2]) / 2);
+            tmp[3] = ((core[1] + core[3]) / 2);
+            //expanding south of core
+        } else {
+            tmp[2] = core[0];
+            tmp[3] = core[1];
+            tmp[0] = ((core[0] + core[2]) / 2);
+            tmp[1] = ((core[1] + core[3]) / 2);
+            //expanding north of core
+        }
+        core = tmp.slice(0);
+    }
+    
+    seeds = [[core[0], core[1]], [core[2], core[3]]];
+    chunk = diamondSquare(seeds, 0, 3);
+    post = {
+        range: [{
+            x: range.x,
+            y: range.y
+        }],
+        tiles: chunk
+    };
+    
+    return post;
+}
+
 exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
     
@@ -207,10 +177,8 @@ exports.createCentral = function () { //once sent the player can keep the core c
     
     core = {
         range: [{
-            x1: 0,
-            x2: 16,
-            y1: 0,
-            y2: 16
+            x: 0,
+            y: 0
         }],
         tiles: postDS
     };

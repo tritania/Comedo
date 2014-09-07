@@ -45,7 +45,7 @@ function preload() {
 function create() {
     "use strict";
     
-    game.world.setBounds(0, 0, 10000, 10000);
+    //game.world.setBounds(-10000, -10000, 10000, 10000);
     //set up the canvas
     game.stage.backgroundColor = '#bbe6a7';
     game.physics.startSystem(Phaser.Physics.P2JS);
@@ -54,7 +54,7 @@ function create() {
     game.input.onDown.add(movePlayer, this);
     
     //load the player and push to players array
-    player = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
+    player = game.add.sprite(0, 0, 'player');
     
     game.physics.p2.enable(player);
     player.body.collideWorldBounds = false;
@@ -89,25 +89,7 @@ function round(num) {
 
 function getMapData() {
     "use strict";
-    
-    //generate canvas size;
-    var c_width = round(width),
-        c_height = round(height);
-    
-    tiles = { //need to subtract
-        x: width / 50,
-        y: height / 50
-    };
-    
-    var request = {
-        x1: 0,
-        x2: tiles.x,
-        y1: 0,
-        y2: tiles.y
-    };
-    
-    
-    getMap(); //send data
+    //will be used to get actual chunks
 }
 
 /**
