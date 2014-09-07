@@ -105,6 +105,7 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
 /**
  * @param range Range of the chunk being requested
  * @param core Core seeds
+ * @return {Object} Requested Chunk
  */
 function getChunk(range, core) {
     "use strict";
@@ -152,23 +153,21 @@ function getChunk(range, core) {
     
     seeds = [[core[0], core[1]], [core[2], core[3]]];
     chunk = diamondSquare(seeds, 0, 3);
-    post = {
-        range: [{
-            x: range.x,
-            y: range.y
-        }],
-        tiles: chunk
-    };
     
-    return post;
+    return chunk;
 }
 
 exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
     
     var seeds = seed(),
+        i,
+        j,
+        tmp,
+        tmp_chunk,
         preCore = array2d(2),
         postDS,
+        primeC = [], //the first 25 chunks
         core;  //core map chunk
     
     preCore = [[seeds[0], seeds[1]], [seeds[2], seeds[3]]];
@@ -183,10 +182,29 @@ exports.createCentral = function () { //once sent the player can keep the core c
         tiles: postDS
     };
     
-    return core;
-};
-
-exports.getChunk = function (id, core) { //for use once the core chunk has been generated and the game has started
-    "use strict";
+    primeC.push(core);
     
+    for (i = -2; i < 3; i++) {
+        for (j = -2; j < 3; j++) {
+            tmp = {
+                x: i * 17,
+                y: j * 17
+            };
+            
+            if (tmp.x === 0 && tmp.y === 0) {
+                //do nothing as chunk has already been generated
+            } else {
+                tmp_chunk = {
+                    range: [{
+                        x: tmp.x,
+                        y: tmp.y
+                    }],
+                    tiles: getChunk(tmp, seeds)
+                };
+                primeC.push(tmp_chunk);
+            }
+        }
+    }
+    
+    return primeC;
 };
