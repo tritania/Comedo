@@ -59,7 +59,3 @@ body {
     line-height: 36px;
     cursor: pointer;
 }
-
-.paused {
-    visibility: hidden;
-}

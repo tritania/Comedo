@@ -32,6 +32,7 @@ function updateViewable() {
 function preload() {
     "use strict";
     game.load.spritesheet('player', 'assets/player.png', 30, 45);
+    game.load.spritesheet('dest', 'assets/destination.png', 15, 15);
     game.load.spritesheet('test1', 'assets/test1.png', 30, 45);
     game.load.spritesheet('test2', 'assets/test2.png', 30, 45);
     game.load.spritesheet('test3', 'assets/test3.png', 30, 45);
@@ -43,20 +44,24 @@ function preload() {
  
 function create() {
     "use strict";
+    
+    game.world.setBounds(0, 0, 10000, 10000);
     //set up the canvas
     game.stage.backgroundColor = '#bbe6a7';
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.P2JS);
     
     //player movement accross all devices
     game.input.onDown.add(movePlayer, this);
     
     //load the player and push to players array
-    player = game.add.sprite(width / 2, height / 2, 'player');
+    player = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
     
-    game.camera.focusOnXY(player.x, player.y);
-    
-    game.physics.arcade.enable(player);
+    game.physics.p2.enable(player);
+    player.body.collideWorldBounds = false;
     //players.push(tmp_player);
+    
+    game.camera.follow(player);
+    game.camera.bounds = null;
     
     active = true;
 }
@@ -65,6 +70,11 @@ function update() {
     "use strict";
     updateViewable();
     hasArrived();
+}
+
+function render() {
+    //game.debug.cameraInfo(game.camera, 32, 32);
+    game.debug.spriteCoords(player, 32, height - 100);
 }
 
 function round(num) {
@@ -79,8 +89,8 @@ function getMapData() {
     "use strict";
     
     //generate canvas size;
-    width = round(width);
-    height = round(height);
+    var c_width = round(width),
+        c_height = round(height);
     
     tiles = { //need to subtract
         x: width / 50,
@@ -108,6 +118,6 @@ function createGame(core) {
     
     console.log("test");
     
-    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 }
 
