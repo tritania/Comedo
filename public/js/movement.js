@@ -1,5 +1,4 @@
-var dest,
-    active;
+var dest = {x: 0, y: 0};
 
 function hasArrived() {
     if (active &&
@@ -18,7 +17,6 @@ function movePlayer(pointer) {
     
     var x = pointer.x,
         y = pointer.y,
-        active = true;
         dx = distanceBetween(x, player.x),
         dy = distanceBetween(y, player.y),
         angle = Math.atan(dy / dx),

@@ -15,8 +15,9 @@ window.addEventListener("keydown", function (e) {
 var width = document.documentElement.clientWidth,
     height = window.innerHeight,
     game,
+    active,
     tiles,
-    players = [],
+    player,
     active, //viewable tiles should be a 2d array
     preloaded = []; //preloaded chunks
 
@@ -43,7 +44,6 @@ function preload() {
 function create() {
     "use strict";
     //set up the canvas
-    var tmp_player;
     game.stage.backgroundColor = '#bbe6a7';
     game.physics.startSystem(Phaser.Physics.ARCADE);
     
@@ -51,17 +51,20 @@ function create() {
     game.input.onDown.add(movePlayer, this);
     
     //load the player and push to players array
-    tmp_player = game.add.sprite(width / 2, height / 2, 'player');
+    player = game.add.sprite(width / 2, height / 2, 'player');
     
-    game.camera.focusOnXY(tmp_player.x, tmp_player.y);
+    game.camera.focusOnXY(player.x, player.y);
     
-    game.physics.arcade.enable(tmp_player);
-    players.push(tmp_player);
+    game.physics.arcade.enable(player);
+    //players.push(tmp_player);
+    
+    active = true;
 }
  
 function update() {
     "use strict";
     updateViewable();
+    hasArrived();
 }
 
 function round(num) {
@@ -69,7 +72,6 @@ function round(num) {
     while (num % 50 !== 0) {
         num++;
     }
-    num = num + 50;
     return num;
 }
 
@@ -91,6 +93,7 @@ function getMapData() {
         y1: 0,
         y2: tiles.y
     };
+    
     
     getMap(); //send data
 }
