@@ -8,8 +8,7 @@ function hasArrived() {
             (player.x >= dest.x - 10 && player.x <= dest.x + 10) &&
             (player.y >= dest.y - 10 && player.y <= dest.y + 10)
             ) {
-        player.body.velocity.x = 0;
-        player.body.velocity.y = 0;
+        player.body.setZeroVelocity();
         dest_e.kill();
         dest_e = null;
         move = false;
@@ -25,8 +24,7 @@ function movePlayer(pointer) {
     
     move = true;
     
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
+    player.body.setZeroVelocity();
     
     var x = pointer.worldX,
         y = pointer.worldY,

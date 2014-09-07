@@ -60,10 +60,12 @@ function create() {
     player.body.collideWorldBounds = false;
     //players.push(tmp_player);
     
-    game.camera.follow(player);
+    game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
     game.camera.bounds = null;
     
     active = true;
+    
+    game.stage.smoothed = true;
 }
  
 function update() {
@@ -118,6 +120,6 @@ function createGame(core) {
     
     console.log("test");
     
-    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render }, false, false);
 }
 
