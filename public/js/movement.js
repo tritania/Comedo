@@ -1,20 +1,29 @@
 var dest = {x: 0, y: 0},
-    dest_e;
+    dest_e = null,
+    move;
 
 function hasArrived() {
-    if (active &&
+    "use strict";
+    if (active && move &&
             (player.x >= dest.x - 10 && player.x <= dest.x + 10) &&
             (player.y >= dest.y - 10 && player.y <= dest.y + 10)
             ) {
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
-        dest_e.destroy();
+        dest_e.kill();
+        dest_e = null;
+        move = false;
     }
 }
 
 function movePlayer(pointer) {
+    "use strict";
     
-    console.log(pointer.x + " " + pointer.y);
+    if (dest_e !== null) {
+        dest_e.kill();
+    }
+    
+    move = true;
     
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
@@ -28,6 +37,7 @@ function movePlayer(pointer) {
         vY = Math.abs(Math.sin(angle) * 300);
     
     dest = {x: x, y: y};
+    console.log(JSON.stringify(dest));
     dest_e = game.add.sprite(dest.x, dest.y, 'dest');
     
     if (x > player.x) {
@@ -48,8 +58,12 @@ function movePlayer(pointer) {
 }
 
 function distanceBetween(point1, point2) {
+    "use strict";
     return Math.sqrt(Math.pow(point2 - point1, 2) + Math.pow(point2 - point1, 2));
     
-}function distanceBetweenObj(point1, point2) {
+}
+
+function distanceBetweenObj(point1, point2) {
+    "use strict";
     return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
 }
