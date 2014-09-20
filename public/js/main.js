@@ -3,7 +3,7 @@
 /*jslint plusplus: true */
 
 /**
- * Stops the canvas from scrolling in other browsers
+ * Stops the canvas from scrolling in browser
  */
 window.addEventListener("keydown", function (e) {
     "use strict";
@@ -15,9 +15,9 @@ window.addEventListener("keydown", function (e) {
 var width = document.documentElement.clientWidth,
     height = window.innerHeight,
     game,
-    active,
     tiles,
     fulcrum,
+    fulcrump, //old fulcrum data
     viewer,
     tracker, //keeps track of the top leftmost tile
     player,
@@ -27,21 +27,17 @@ var width = document.documentElement.clientWidth,
 
 function round(num) {
     "use strict";
-    num = Math.ceil(num);
     while (num % 50 !== 0) {
-        if (num > 0) {
-            num++;
-        } else {
-            num--;
-        }
+        num++;
     }
     return num;
 }
 
 function tileRound(num) {
     "use strict";
+    num = Math.ceil(num); //might need to round down
     while (num % 50 !== 0) {
-            num--;
+        num--;
     }
     return num;
 }
@@ -49,12 +45,32 @@ function tileRound(num) {
 
 function getTile(x, y) {
     "use strict";
-    
+    console.log(x + " " + y);
 }
 
-//kills sprites that are no longer viewable can improve performance by only running on player movement
+//kills sprites that are no longer viewable, can improve performance by only running on player movement
 function updateViewable() {
     "use strict";
+
+    var tmp, //new viewable tiles
+        i,
+        j;
+
+    fulcrum = {
+        x: tileRound(tracker.worldX),
+        y: tileRound(tracker.worldY)
+    };
+
+    //only redraw the tiles if its needed.
+    if (fulcrum.x != fulcrump.x || fulcrum.y != fulcrump.y) {
+        for (i = 0; i < tiles.y; i++) {
+            for (j = 0; j < tiles.x; j++) {
+                getTile( (fulcrum.x + (j * 50)), (fulcrum.y + (i * 50)) );
+            }
+        }
+    }
+
+    fulcrump = fulcrum;
 
 }
 
@@ -94,6 +110,7 @@ function create() {
 
     game.stage.smoothed = true;
 
+    //setup the fulcrum tracker
     tracker = new Phaser.Pointer(game, 37);
     tracker.clientX = 0;
     tracker.clientY = 0;
@@ -107,7 +124,7 @@ function update() {
 
 function render() {
     "use strict";
-    //game.debug.cameraInfo(game.camera, 32, 32);
+    //player pos debug info
     game.debug.spriteCoords(player, 32, height - 100);
 }
 
@@ -118,6 +135,16 @@ function render() {
 function createGame(core) {
     "use strict";
     preloaded = core;
+
+    fulcrump = {
+        x: 0,
+        y: 0
+    };
+
+    tiles = {
+        x: (round(width) / 50),
+        y: (round(height) / 50)
+    };
 
     game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render }, false, false);
 }

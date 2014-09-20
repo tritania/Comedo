@@ -1,7 +1,7 @@
 {
   "name": "Comedo",
   "version": "0.0.1",
-  "description": "HTML5 top down zombie game",
+  "description": "HTML5 game",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
