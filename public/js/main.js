@@ -21,7 +21,9 @@ var width = document.documentElement.clientWidth,
     viewer,
     tracker, //keeps track of the top leftmost tile
     player,
-    active, //viewable tiles should be a 2d array
+    active,
+    activet = [], //viewable tiles should be a 2d array
+    oactive= [],
     preloaded; //preloaded chunks
 
 
@@ -45,7 +47,46 @@ function tileRound(num) {
 
 function getTile(x, y) {
     "use strict";
-    //need to actually get tile
+    var i,
+          xp = x,
+          yp = y;
+
+    while (xp % 850 != 0) {
+        xp = xp - 50;
+    }
+
+    while (yp % 850 != 0) {
+        yp = yp - 50;
+    }
+
+    i = preloaded.length;
+    while (i--) {
+        if (preloaded[i].range.x == xp && preloaded[i].range.y == yp) {
+            if (x > 0) {
+                x = (x % 850) / 50;
+            } else {
+                x = Math.abs(x);
+                x = 17 - ((x % 850) / 50);
+            }
+
+            if (y > 0) {
+                y = (y % 850) / 50;
+            } else {
+                y = Math.abs(y);
+                y = 17 - ((y % 850) / 50);
+            }
+
+            if (x == 17) {
+                x = 0;
+            }
+
+            if (y == 17) {
+                y = 0;
+            }
+            return preloaded[i].tiles[y][x];
+
+        }
+    }
 }
 
 //kills sprites that are no longer viewable, can improve performance by only running on player movement
@@ -53,8 +94,10 @@ function updateViewable() {
     "use strict";
 
     var tmp, //new viewable tiles
+        tmp2,
         i,
-        j;
+        j,
+        k;
 
     fulcrum = {
         x: tileRound(tracker.worldX),
@@ -65,10 +108,21 @@ function updateViewable() {
     if (fulcrum.x != fulcrump.x || fulcrum.y != fulcrump.y) {
         for (i = 0; i < tiles.y; i++) {
             for (j = 0; j < tiles.x; j++) {
-                getTile( (fulcrum.x + (j * 50)), (fulcrum.y + (i * 50)) );
+                tmp = getTile( (fulcrum.x + (j * 50)), (fulcrum.y + (i * 50)) );
+                tmp2 = game.add.sprite( (fulcrum.x + (j * 50)), (fulcrum.y + (i * 50)), 'test1');
+                activet.push(tmp2);
             }
         }
+        k = oactive.length;
+        while(k--) {
+            oactive[k].destroy();
+        }
+
+        oactive = activet;
+        activet = [];
     }
+
+
 
     fulcrump = fulcrum;
 
@@ -78,11 +132,11 @@ function preload() {
     "use strict";
     game.load.spritesheet('player', 'assets/player.png', 30, 45);
     game.load.spritesheet('dest', 'assets/destination.png', 15, 15);
-    game.load.spritesheet('test1', 'assets/test1.png', 30, 45);
-    game.load.spritesheet('test2', 'assets/test2.png', 30, 45);
-    game.load.spritesheet('test3', 'assets/test3.png', 30, 45);
-    game.load.spritesheet('test4', 'assets/test4.png', 30, 45);
-    game.load.spritesheet('test5', 'assets/test5.png', 30, 45);
+    game.load.spritesheet('test1', 'assets/test1.png', 50, 50);
+    game.load.spritesheet('test2', 'assets/test2.png', 50, 50);
+    game.load.spritesheet('test3', 'assets/test3.png', 50, 50);
+    game.load.spritesheet('test4', 'assets/test4.png', 50, 50);
+    game.load.spritesheet('test5', 'assets/test5.png', 50, 50);
 }
 
 function create() {
