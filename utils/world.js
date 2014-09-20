@@ -157,6 +157,7 @@ function getChunk(range, core) {
     return chunk;
 }
 
+
 exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
     
@@ -195,10 +196,10 @@ exports.createCentral = function () { //once sent the player can keep the core c
                 //do nothing as chunk has already been generated
             } else {
                 tmp_chunk = {
-                    range: [{
+                    range: {
                         x: tmp.x,
                         y: tmp.y
-                    }],
+                    },
                     tiles: getChunk(tmp, seeds)
                 };
                 primeC.push(tmp_chunk);
