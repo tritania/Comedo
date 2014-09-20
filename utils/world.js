@@ -8,14 +8,14 @@ function seed() {
         i,
         tmp,
         val;
-    
+
     for (i = 0; i < 4; i++) {
         val = Math.random() * 1111;
         tmp = Math.sin(val++) * 10000;
         tmp = (tmp - Math.floor(tmp)) * 100;
         seeds.push(tmp);
     }
-    
+
     return seeds;
 }
 
@@ -28,10 +28,10 @@ function array2d(rows) {
     }
     return arr;
 }
-    
+
 function diamondSquare(arr, depth, final) { //first depth is always 0
     "use strict"; //do it by expanding grids
-        
+
     var size = arr.length,
         it = 0, //rows
         itt = 0, //columns
@@ -39,7 +39,7 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         spacer = 0, //defines where to place arr values
         tmp = array2d(size), //create tmp array for width expansion
         tmp2;// = array2d(depth + 3); //create tmp array for width expansion
-    
+
     //expand matrix's width
     for (it = 0; it < size; it++) {
         for (itt = 0; itt < size; itt++) {
@@ -48,8 +48,8 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         }
         spacer = 0;
     }
-    
-    
+
+
     //fill matrix width
     for (it = 0; it < size; it++) {
         for (itt = 0; itt < size; itt++) {
@@ -59,8 +59,8 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         fill = 1;
         tmp[it].splice(tmp[it].length - 1, 1);
     }
-    
-    
+
+
     //expand matrix height
     tmp2 = array2d(tmp[0].length);
     spacer = 0;
@@ -71,8 +71,8 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         }
         spacer = spacer + 2;
     }
-    
-    
+
+
     //fill sides
     fill = 0;
     size = tmp2.length;
@@ -83,8 +83,8 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         }
         it++;
     }
-    
-    
+
+
     //fill center
     for (it = 1; it < size; it++) { //start on second row as the center will be in the middle
         for (itt = 1; itt < size; itt++) { //itt starts at 1 to get the center
@@ -93,7 +93,7 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
         }
         it++;
     }
-    
+
     if (depth === final) {
         return tmp2;
     } else {
@@ -112,11 +112,11 @@ function getChunk(range, core) {
     var chunk,//coords of core chunk
         post,
         seeds,
-        h = range.x / 17, //horizontal chunks from core
-        v = range.y / 17, //vertical chunks from core
+        h = range.x / 850, //horizontal chunks from core
+        v = range.y / 850, //vertical chunks from core
         tmp = [0, 1, 2, 3],
         i;
-    
+
     for (i = 0; i < Math.abs(h); i++) {
         if (h > 0) {
             tmp[0] = core[1];
@@ -133,7 +133,7 @@ function getChunk(range, core) {
         }
         core = tmp.slice(0);
     }
-    
+
     for (i = 0; i < Math.abs(v); i++) {
         if (v > 0) {
             tmp[0] = core[2];
@@ -150,17 +150,17 @@ function getChunk(range, core) {
         }
         core = tmp.slice(0);
     }
-    
+
     seeds = [[core[0], core[1]], [core[2], core[3]]];
     chunk = diamondSquare(seeds, 0, 3);
-    
+
     return chunk;
 }
 
 
 exports.createCentral = function () { //once sent the player can keep the core chunk loaded and pass it any other players that join
     "use strict";
-    
+
     var seeds = seed(),
         i,
         j,
@@ -170,28 +170,28 @@ exports.createCentral = function () { //once sent the player can keep the core c
         postDS,
         primeC = [], //the first 25 chunks
         core;  //core map chunk
-    
+
     preCore = [[seeds[0], seeds[1]], [seeds[2], seeds[3]]];
-    
+
     postDS = diamondSquare(preCore, 0, 3);
-    
+
     core = {
-        range: [{
+        range: {
             x: 0,
             y: 0
-        }],
+        },
         tiles: postDS
     };
-    
+
     primeC.push(core);
-    
+
     for (i = -2; i < 3; i++) {
         for (j = -2; j < 3; j++) {
             tmp = {
-                x: i * 17,
-                y: j * 17
+                x: i * 850,
+                y: j * 850
             };
-            
+
             if (tmp.x === 0 && tmp.y === 0) {
                 //do nothing as chunk has already been generated
             } else {
@@ -206,6 +206,6 @@ exports.createCentral = function () { //once sent the player can keep the core c
             }
         }
     }
-    
+
     return primeC;
 };

@@ -45,7 +45,7 @@ function tileRound(num) {
 
 function getTile(x, y) {
     "use strict";
-    console.log(x + " " + y);
+    //need to actually get tile
 }
 
 //kills sprites that are no longer viewable, can improve performance by only running on player movement
