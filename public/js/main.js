@@ -97,6 +97,8 @@ function updateViewable() {
         tmp2,
         i,
         j,
+        x,
+        y,
         k;
 
     fulcrum = {
@@ -106,13 +108,17 @@ function updateViewable() {
 
     //only redraw the tiles if its needed.
     if (fulcrum.x != fulcrump.x || fulcrum.y != fulcrump.y) {
+        j = tiles.x;
         for (i = 0; i < tiles.y; i++) {
             for (j = 0; j < tiles.x; j++) {
-                tmp = getTile( (fulcrum.x + (j * 50)), (fulcrum.y + (i * 50)) );
-                tmp2 = game.add.sprite( (fulcrum.x + (j * 50)), (fulcrum.y + (i * 50)), 'test1');
+                x = fulcrum.x + (j * 50);
+                y =  fulcrum.y + (i * 50);
+                tmp = getTile( x, y);
+                tmp2 = game.add.sprite(x, y, tmp);
                 activet.push(tmp2);
             }
         }
+
         k = oactive.length;
         while(k--) {
             oactive[k].destroy();
@@ -132,11 +138,11 @@ function preload() {
     "use strict";
     game.load.spritesheet('player', 'assets/player.png', 30, 45);
     game.load.spritesheet('dest', 'assets/destination.png', 15, 15);
-    game.load.spritesheet('test1', 'assets/test1.png', 50, 50);
-    game.load.spritesheet('test2', 'assets/test2.png', 50, 50);
-    game.load.spritesheet('test3', 'assets/test3.png', 50, 50);
-    game.load.spritesheet('test4', 'assets/test4.png', 50, 50);
-    game.load.spritesheet('test5', 'assets/test5.png', 50, 50);
+    game.load.spritesheet('1', 'assets/test1.png', 50, 50);
+    game.load.spritesheet('2', 'assets/test2.png', 50, 50);
+    game.load.spritesheet('3', 'assets/test3.png', 50, 50);
+    game.load.spritesheet('4', 'assets/test4.png', 50, 50);
+    game.load.spritesheet('5', 'assets/test5.png', 50, 50);
 }
 
 function create() {
@@ -174,6 +180,7 @@ function update() {
     "use strict";
     updateViewable();
     hasArrived();
+    player.bringToTop();
 }
 
 function render() {
@@ -196,8 +203,8 @@ function createGame(core) {
     };
 
     tiles = {
-        x: (round(width) / 50),
-        y: (round(height) / 50)
+        x: (round(width) / 50) + 1,
+        y: (round(height) / 50) + 1
     };
 
     game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render }, false, false);

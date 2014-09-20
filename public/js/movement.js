@@ -12,20 +12,22 @@ function hasArrived() {
         dest_e.kill();
         dest_e = null;
         move = false;
+    } else if (dest_e !== null) {
+        dest_e.bringToTop();
     }
 }
 
 function movePlayer(pointer) {
     "use strict";
-    
+
     if (dest_e !== null) {
         dest_e.kill();
     }
-    
+
     move = true;
-    
+
     player.body.setZeroVelocity();
-    
+
     var x = pointer.worldX,
         y = pointer.worldY,
         dx = distanceBetween(x, player.x),
@@ -33,10 +35,10 @@ function movePlayer(pointer) {
         angle = Math.atan(dy / dx),
         vX = Math.abs(Math.cos(angle) * 300),
         vY = Math.abs(Math.sin(angle) * 300);
-    
+
     dest = {x: x, y: y};
     dest_e = game.add.sprite(dest.x, dest.y, 'dest');
-    
+
     if (x > player.x) {
         player.body.velocity.x = vX;
     } else if (x === player.x) {
@@ -44,7 +46,7 @@ function movePlayer(pointer) {
     } else {
         player.body.velocity.x = -vX;
     }
-   
+
     if (y > player.y) {
         player.body.velocity.y = vY;
     } else if (y === player.y) {
@@ -57,7 +59,7 @@ function movePlayer(pointer) {
 function distanceBetween(point1, point2) {
     "use strict";
     return Math.sqrt(Math.pow(point2 - point1, 2) + Math.pow(point2 - point1, 2));
-    
+
 }
 
 function distanceBetweenObj(point1, point2) {

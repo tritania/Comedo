@@ -29,10 +29,39 @@ function array2d(rows) {
     return arr;
 }
 
+function typer(chunk) {
+    "use strict";
+    var i,
+          k,
+          tmp;
+
+    for (i = 0; i < chunk.length; i++) {
+        for (k = 0; k < chunk[i].length; k++) {
+            tmp = chunk[i][k];
+            if (tmp < 20) {
+                tmp = '1';
+            } else if (tmp < 40) {
+                tmp = '2';
+            } else if (tmp < 60) {
+                tmp = '3';
+            } else if (tmp < 80) {
+                tmp = '4';
+            } else  {
+                tmp = '5';
+            }
+
+            chunk[i][k] = tmp;
+
+        }
+    }
+    return chunk;
+}
+
 function diamondSquare(arr, depth, final) { //first depth is always 0
     "use strict"; //do it by expanding grids
 
     var size = arr.length,
+        posttyped,
         it = 0, //rows
         itt = 0, //columns
         fill = 1, //finds the elements that need to be filled
@@ -95,7 +124,8 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
     }
 
     if (depth === final) {
-        return tmp2;
+        posttyped = typer(tmp2);
+        return posttyped;
     } else {
         depth++;
         return diamondSquare(tmp2, depth, final);
