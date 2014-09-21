@@ -78,6 +78,7 @@ function updateChunks() {
         need_tracker.BL.y = need_tracker.BL.y - 850;
         need_tracker.BR.y = need_tracker.BR.y - 850;
         downChunk(need);
+        need = [];
     }
 
     if (Math.abs(need_tracker.BL.y - yp) < 850) {
@@ -95,6 +96,7 @@ function updateChunks() {
         need_tracker.BL.y = need_tracker.BL.y + 850;
         need_tracker.BR.y = need_tracker.BR.y + 850;
         downChunk(need);
+        need = [];
     }
 
     if (Math.abs(need_tracker.TL.x - xp) < 850) {
@@ -112,6 +114,7 @@ function updateChunks() {
         need_tracker.BL.x = need_tracker.BL.x - 850;
         need_tracker.BR.x = need_tracker.BR.x - 850;
         downChunk(need);
+        need = [];
     }
 
 
@@ -130,6 +133,7 @@ function updateChunks() {
         need_tracker.BL.x = need_tracker.BL.x + 850;
         need_tracker.BR.x = need_tracker.BR.x + 850;
         downChunk(need);
+        need =[];
     }
 
 }
@@ -196,26 +200,27 @@ function getTile(x, y) {
 function updateViewable() {
     "use strict";
 
-    var tmp, //new viewable tiles
-        tmp2,
-        i,
-        j,
-        x,
-        y,
-        k;
-
-    fulcrum = {
+    fulcrum = { //get the new tile viewport
         x: tileRound(tracker.worldX),
         y: tileRound(tracker.worldY)
     };
 
     //only redraw the tiles if its needed.
     if (fulcrum.x != fulcrump.x || fulcrum.y != fulcrump.y) {
-        for (i = 0; i < tiles.y; i++) {
-            for (j = 0; j < tiles.x; j++) {
+        var i = tiles.y,
+              j,
+              k,
+              tmp,
+              tmp2,
+              x,
+              y;
+
+        while (i--) {
+            j = tiles.x;
+            while (j--) {
                 x = fulcrum.x + (j * 50);
                 y =  fulcrum.y + (i * 50);
-                tmp = getTile( x, y);
+                tmp = getTile(x, y);
                 tmp2 = game.add.sprite(x, y, tmp);
                 activet.push(tmp2);
             }
@@ -228,12 +233,9 @@ function updateViewable() {
 
         oactive = activet;
         activet = [];
+
     }
-
-
-
     fulcrump = fulcrum;
-
 }
 
 function preload() {

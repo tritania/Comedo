@@ -23,7 +23,7 @@ function reseed(seed) {
     var seeds = [];
 
     for (i = 0; i < 4; i++) {
-        seed[i] = seed[i] * 1111;
+        seed[i] = Math.random() * 1111;
         tmp = Math.sin(seed[i]++) * 10000;
         tmp = (tmp - Math.floor(tmp)) * 100;
         seeds.push(tmp);
