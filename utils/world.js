@@ -19,6 +19,19 @@ function seed() {
     return seeds;
 }
 
+function reseed(seed) {
+    var seeds = [];
+
+    for (i = 0; i < 4; i++) {
+        seed[i] = seed[i] * 1111;
+        tmp = Math.sin(seed[i]++) * 10000;
+        tmp = (tmp - Math.floor(tmp)) * 100;
+        seeds.push(tmp);
+    }
+
+    return seeds;
+}
+
 function array2d(rows) {
     "use strict";
     var arr = new Array(rows),
@@ -124,8 +137,7 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
     }
 
     if (depth === final) {
-        posttyped = typer(tmp2);
-        return posttyped;
+        return tmp2;
     } else {
         depth++;
         return diamondSquare(tmp2, depth, final);
@@ -165,6 +177,7 @@ function getChunk(range, core) {
     var chunk,//coords of core chunk
         post,
         seeds,
+        reseeds,
         h = range.x / 850, //horizontal chunks from core
         v = range.y / 850, //vertical chunks from core
         tmp = [0, 1, 2, 3],
@@ -204,8 +217,10 @@ function getChunk(range, core) {
         core = tmp.slice(0);
     }
 
-    seeds = [[core[0], core[1]], [core[2], core[3]]];
+    reseeds = reseed(core);
+    seeds = [[reseeds[0], reseeds[1]], [reseeds[2], reseeds[3]]];
     chunk = diamondSquare(seeds, 0, 3);
+    chunk = typer(chunk);
 
     return chunk;
 }
@@ -228,6 +243,7 @@ exports.createCentral = function () { //once sent the player can keep the core c
     preCore = [[seeds[0], seeds[1]], [seeds[2], seeds[3]]];
 
     postDS = diamondSquare(preCore, 0, 3);
+    postDS = typer(postDS);
 
     core = {
         range: {
