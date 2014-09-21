@@ -55,26 +55,80 @@ function updateChunks() {
           xp = player.x,
           yp = player.y,
           tmp; //tmp range storage
-    // while (i--) {
-    //     if (Math.abs(preloaded[i].range.x - player.x) > 2550) {
-    //         //cull from array
-    //     } else if (Math.abs(preloaded[i].range.y - player.y) > 2550) {
-    //         //cull from array
-    //     }
-    // }
+    while (i--) {
+        if (Math.abs(preloaded[i].range.x - player.x) > 2550) {
+            preloaded.splice(i, 1);
+        } else if (Math.abs(preloaded[i].range.y - player.y) > 2550) {
+            preloaded.splice(i, 1);
+        }
+    }
 
     if (Math.abs(need_tracker.TL.y - yp) < 850) {
         //get more chunks on top
         k = need_tracker.TL.y - 850;
-        for (j = 1; j < 5; j++) {
+        for (j = 0; j < 5; j++) {
             tmp = {
                 x: (need_tracker.TL.x + (j * 850)),
                 y: k
             };
         need.push(tmp);
         }
-
         need_tracker.TL.y = need_tracker.TL.y - 850;
+        need_tracker.TR.y = need_tracker.TR.y - 850;
+        need_tracker.BL.y = need_tracker.BL.y - 850;
+        need_tracker.BR.y = need_tracker.BR.y - 850;
+        downChunk(need);
+    }
+
+    if (Math.abs(need_tracker.BL.y - yp) < 850) {
+        //get more chunks on top
+        k = need_tracker.BL.y + 850;
+        for (j = 0; j < 5; j++) {
+            tmp = {
+                x: (need_tracker.TL.x + (j * 850)),
+                y: k
+            };
+        need.push(tmp);
+        }
+        need_tracker.TL.y = need_tracker.TL.y + 850;
+        need_tracker.TR.y = need_tracker.TR.y + 850;
+        need_tracker.BL.y = need_tracker.BL.y + 850;
+        need_tracker.BR.y = need_tracker.BR.y + 850;
+        downChunk(need);
+    }
+
+    if (Math.abs(need_tracker.TL.x - xp) < 850) {
+        //get more chunks on top
+        k = need_tracker.TL.x - 850;
+        for (j = 0; j < 5; j++) {
+            tmp = {
+                x: k,
+                y: (need_tracker.TL.y + (j * 850))
+            };
+        need.push(tmp);
+        }
+        need_tracker.TL.x = need_tracker.TL.x - 850;
+        need_tracker.TR.x = need_tracker.TR.x - 850;
+        need_tracker.BL.x = need_tracker.BL.x - 850;
+        need_tracker.BR.x = need_tracker.BR.x - 850;
+        downChunk(need);
+    }
+
+
+    if (Math.abs(need_tracker.TR.x - xp) < 850) {
+        //get more chunks on top
+        k = need_tracker.TR.x + 850;
+        for (j = 0; j < 5; j++) {
+            tmp = {
+                x: k,
+                y: (need_tracker.TL.y + (j * 850))
+            };
+        need.push(tmp);
+        }
+        need_tracker.TL.x = need_tracker.TL.x + 850;
+        need_tracker.TR.x = need_tracker.TR.x + 850;
+        need_tracker.BL.x = need_tracker.BL.x + 850;
+        need_tracker.BR.x = need_tracker.BR.x + 850;
         downChunk(need);
     }
 
@@ -86,6 +140,19 @@ function getTile(x, y) {
           c_range,
           xp = x,
           yp = y;
+
+
+    // if (xp > 0) {
+    //     xp = Math.ceil(xp/850) * 850;
+    // } else {
+    //     xp = Math.floor(xp/850) * 850;
+    // }
+    //
+    // if (yp > 0) {
+    //     yp = Math.ceil(yp/850) * 850;
+    // } else {
+    //     yp = Math.floor(yp/850) * 850;
+    // }
 
     while (xp % 850 != 0) {
         xp = xp - 50;
@@ -144,7 +211,6 @@ function updateViewable() {
 
     //only redraw the tiles if its needed.
     if (fulcrum.x != fulcrump.x || fulcrum.y != fulcrump.y) {
-        j = tiles.x;
         for (i = 0; i < tiles.y; i++) {
             for (j = 0; j < tiles.x; j++) {
                 x = fulcrum.x + (j * 50);
@@ -223,7 +289,7 @@ function update() {
 function render() {
     "use strict";
     //player pos debug info
-    game.debug.spriteCoords(player, 32, height - 100);
+    //game.debug.spriteCoords(player, 32, height - 100);
 }
 
 /**
