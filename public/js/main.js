@@ -16,6 +16,9 @@ var width = document.documentElement.clientWidth,
     height = window.innerHeight,
     game,
     tiles,
+    seed,
+    need = [], //chunks to get from the server
+    need_tracker, //keeps track of the four corners of the chunks
     fulcrum,
     fulcrump, //old fulcrum data
     viewer,
@@ -37,17 +40,50 @@ function round(num) {
 
 function tileRound(num) {
     "use strict";
-    num = Math.ceil(num); //might need to round down
-    while (num % 50 !== 0) {
+    num = ~~num; //might need to round down
+    while (num % 50 != 0) {
         num--;
     }
     return num;
 }
 
+function updateChunks() {
+    "use strict";
+    var i = preloaded.length,
+          j,
+          k,
+          xp = player.x,
+          yp = player.y,
+          tmp; //tmp range storage
+    // while (i--) {
+    //     if (Math.abs(preloaded[i].range.x - player.x) > 2550) {
+    //         //cull from array
+    //     } else if (Math.abs(preloaded[i].range.y - player.y) > 2550) {
+    //         //cull from array
+    //     }
+    // }
+
+    if (Math.abs(need_tracker.TL.y - yp) < 850) {
+        //get more chunks on top
+        k = need_tracker.TL.y - 850;
+        for (j = 1; j <= 5; j++) {
+            tmp = {
+                x: (need_tracker.TL.x + (j * 850)),
+                y: k
+            };
+        need.push(tmp);
+        }
+
+        need_tracker.TL.y = need_tracker.TL.y - 850;
+        downChunk(need);
+    }
+
+}
 
 function getTile(x, y) {
     "use strict";
     var i,
+          c_range,
           xp = x,
           yp = y;
 
@@ -180,6 +216,7 @@ function update() {
     "use strict";
     updateViewable();
     hasArrived();
+    updateChunks();
     player.bringToTop();
 }
 
@@ -196,6 +233,25 @@ function render() {
 function createGame(core) {
     "use strict";
     preloaded = core;
+
+    need_tracker = {
+        TL: {
+            x: core[1].range.x,
+            y: core[1].range.y
+        },
+        BR: {
+            x: core[24].range.x,
+            y: core[24].range.y
+        },
+        BL: {
+            x: core[5].range.x,
+            y: core[5].range.y
+        },
+        TR: {
+            x: core[20].range.x,
+            y: core[20].range.y
+        }
+    }
 
     fulcrump = {
         x: 0,

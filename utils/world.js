@@ -132,6 +132,24 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
     }
 }
 
+exports.getChunk = function (range, core) {
+    "use strict";
+    var i,
+          chunks = [];
+
+    for (i = 0; i < range.length; i++) {
+        var chunk = {
+            range: {
+                x: range[i].x,
+                y: range[i].y
+            },
+            tiles: getChunk(range, core),
+        };
+        chunks.push(chunk);
+    }
+    return chunks;
+}
+
 /**
  * @param range Range of the chunk being requested
  * @param core Core seeds
@@ -192,6 +210,7 @@ exports.createCentral = function () { //once sent the player can keep the core c
     "use strict";
 
     var seeds = seed(),
+        data,
         i,
         j,
         tmp,
@@ -210,7 +229,7 @@ exports.createCentral = function () { //once sent the player can keep the core c
             x: 0,
             y: 0
         },
-        tiles: postDS
+        tiles: postDS,
     };
 
     primeC.push(core);
@@ -230,12 +249,17 @@ exports.createCentral = function () { //once sent the player can keep the core c
                         x: tmp.x,
                         y: tmp.y
                     },
-                    tiles: getChunk(tmp, seeds)
+                    tiles: getChunk(tmp, seeds),
                 };
                 primeC.push(tmp_chunk);
             }
         }
     }
 
-    return primeC;
+    data = {
+        map: primeC,
+        core: seeds
+    };
+
+    return data;
 };

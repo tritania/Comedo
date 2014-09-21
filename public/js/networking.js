@@ -5,9 +5,17 @@ var socket = io.connect();
 
 socket.on("map", function (data) {
     "use strict";
-    var core = data;
+    var core = data.map;
+    seed = data.core;
     createGame(core);
-    //never stops, probably why the disconnect
+});
+
+socket.on("chunk", function (data) {
+    "use strict";
+    var i = data.length;
+    while (i--) {
+        preloaded.push(data[i]);
+    }
 });
 
 function getMap() {
@@ -15,9 +23,11 @@ function getMap() {
     socket.emit("getmap", {val: true}); //send all data
 }
 
-function getChunks() { //will send the chunk id's it needs for the player
+function downChunk(ranges) { //will send the chunk id's it needs for the player
     "use strict";
+    var tmp = {
+        ranges: ranges,
+        seed: seed
+    }
+    socket.emit("getchunk", tmp);
 }
-    
-
-

@@ -21,14 +21,20 @@ console.log("Comedo is initializing...");
 
 io.sockets.on('connection', function (socket) {
     console.log("User " + socket.id + " has connected");
-    
+
     socket.on('getmap', function (data) {
         var map = worldgen.createCentral(); //should save central chunk
         console.log("user is requesting a map");
         socket.emit("map", map);
         console.log("map sent");
     });
-    
+
+    socket.on('getchunk', function (data) {
+        console.log("client needs a chunk!");
+        var chunks = worldgen.getChunk(data.ranges, data.seed);
+        socket.emit("chunk", chunks);
+    });
+
     socket.on('disconnect', function () { //will also need to check if player is active in anyone elses room
         console.log("User disconnected with id " + socket.id);
     });
