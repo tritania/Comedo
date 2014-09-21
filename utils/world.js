@@ -50,17 +50,20 @@ function typer(chunk) {
 
     for (i = 0; i < chunk.length; i++) {
         for (k = 0; k < chunk[i].length; k++) {
-            tmp = chunk[i][k];
-            if (tmp < 20) {
-                tmp = '1';
-            } else if (tmp < 40) {
-                tmp = '2';
-            } else if (tmp < 60) {
-                tmp = '3';
-            } else if (tmp < 80) {
-                tmp = '4';
+            tmp = {
+                type: null,
+                active: false
+            };
+            if (chunk[i][k] < 20) {
+                tmp.type = '1';
+            } else if (chunk[i][k] < 40) {
+                tmp.type = '2';
+            } else if (chunk[i][k] < 60) {
+                tmp.type = '3';
+            } else if (chunk[i][k] < 80) {
+                tmp.type = '4';
             } else  {
-                tmp = '5';
+                tmp.type = '5';
             }
 
             chunk[i][k] = tmp;
@@ -71,7 +74,7 @@ function typer(chunk) {
 }
 
 function diamondSquare(arr, depth, final) { //first depth is always 0
-    "use strict"; //do it by expanding grids
+    "use strict";
 
     var size = arr.length,
         posttyped,

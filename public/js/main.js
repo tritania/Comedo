@@ -190,7 +190,7 @@ function getTile(x, y) {
             if (y == 17) {
                 y = 0;
             }
-            return preloaded[i].tiles[y][x];
+            return preloaded[i].tiles[y][x].type;
 
         }
     }
