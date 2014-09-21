@@ -31,7 +31,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('getchunk', function (data) {
         console.log("client needs a chunk!");
-        var chunks = worldgen.getChunk(data.ranges, data.seed);
+        var chunks = worldgen.getChunks(data.ranges, data.seed);
         socket.emit("chunk", chunks);
     });
 

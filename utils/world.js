@@ -132,18 +132,23 @@ function diamondSquare(arr, depth, final) { //first depth is always 0
     }
 }
 
-exports.getChunk = function (range, core) {
+exports.getChunks = function (range, core) {
     "use strict";
     var i,
           chunks = [];
 
     for (i = 0; i < range.length; i++) {
+        var tmp = {
+            x: range[i].x,
+            y: range[i].y
+        };
+
         var chunk = {
             range: {
                 x: range[i].x,
                 y: range[i].y
             },
-            tiles: getChunk(range, core),
+            tiles: getChunk(tmp, core),
         };
         chunks.push(chunk);
     }

@@ -66,7 +66,7 @@ function updateChunks() {
     if (Math.abs(need_tracker.TL.y - yp) < 850) {
         //get more chunks on top
         k = need_tracker.TL.y - 850;
-        for (j = 1; j <= 5; j++) {
+        for (j = 1; j < 5; j++) {
             tmp = {
                 x: (need_tracker.TL.x + (j * 850)),
                 y: k

@@ -12,6 +12,8 @@ socket.on("map", function (data) {
 
 socket.on("chunk", function (data) {
     "use strict";
+    console.log(JSON.stringify(data));
+
     var i = data.length;
     while (i--) {
         preloaded.push(data[i]);
