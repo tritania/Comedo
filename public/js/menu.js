@@ -7,7 +7,6 @@ function login() {
               password: pass
           };
           trylogin(logindata);
-    getMap(); //for now always serve the map
 }
 
 function showcase() {
