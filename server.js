@@ -10,7 +10,7 @@ var express = require("express"),
     port = 9090;
 var io = require('socket.io').listen(app.listen(port));
 var manager = require('./lib/sql/manager');
-var users = require('./lib/sql/manager');
+var users = require('./lib/sql/users');
 
 manager.destroyUsersDatabase(function(){
     manager.initUsersDatabase(function(){
@@ -44,7 +44,6 @@ function start() {
         });
 
         socket.on('login', function (data) {
-
             users.authUser(data.username, data.password, function(err, res) {
                 if (res) socket.emit("loginevent", true);
                 else {
