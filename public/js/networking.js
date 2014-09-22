@@ -23,24 +23,19 @@ socket.on("chunk", function (data) {
 //Listens for a loginevent
 socket.on("loginevent", function (data) {
     if (data === true) {
+        getMap();
         //login valid from server
     } else {
+        document.getElementById("logtxt").innerHTML = "Login Failed.";
+        document.getElementById("gid").value  = "";
+        document.getElementById("gpass").value  = "";
         //login not valid
     }
 });
 
 //Listens for a failed registration
 socket.on("regfailed", function (data) {
-
-});
-
-//Listens for a username validity check
-socket.on("userchecked", function (data) {
-    if (data === true) {
-        //login valid from server
-    } else {
-        //login not valid
-    }
+    document.getElementById("regtxt").innerHTML = data.error;
 });
 
 /**
@@ -48,6 +43,7 @@ socket.on("userchecked", function (data) {
  **/
 function getMap() {
     "use strict";
+    document.getElementById("joined").style.visibility = "hidden";
     socket.emit("getmap", {val: true}); //send all data
 }
 
