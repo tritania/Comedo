@@ -30,9 +30,27 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('getchunk', function (data) {
-        console.log("client needs a chunk!");
         var chunks = worldgen.getChunks(data.ranges, data.seed);
         socket.emit("chunk", chunks);
+    });
+
+    socket.on('login', function (data) {
+        var valid;
+        socket.emit("loginevent", valid);
+    });
+
+    socket.on('register', function (data) {
+        var valid;
+        if (valid) {
+            socket.emit("loginevent", valid); //if registration is good pass a login event
+        } else {
+            socket.emit("regfailed", valid); //else pass a registration failed event
+        }
+    });
+
+    socket.on('usercheck', function (data) {
+        var valid;
+        socket.emit("userchecked", valid); //return bool
     });
 
     socket.on('disconnect', function () { //will also need to check if player is active in anyone elses room
