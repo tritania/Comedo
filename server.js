@@ -54,17 +54,16 @@ function start() {
         });
 
         socket.on('register', function (data) {
+            users.createUser(data.username, data.email, data.password, function(err, res) {
+                if (res) {
+                    console.log("registered");
+                    socket.emit("loginevent", true);
+                } else {
+                    socket.emit("regfailed", false);
+                    console.log("reg failed", err);
+                }
 
-            users.userExists(data.username, function(err, res){
-                if (err || !res) socket.emit("regfailed", false);
-                else {
-                    users.createUser(data.username, data.email, data.password, function(){
-                        if (err) socket.emit("regfailed", false);
-                        else
-                            socket.emit("loginevent", true);
-                     });
-                 }
-            });
+             });
 
         });
 
