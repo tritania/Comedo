@@ -47,6 +47,7 @@ function start() {
             users.authUser(data.username, data.password, function(err, res) {
                 if (res) socket.emit("loginevent", true);
                 else {
+                    console.log("false");
                     socket.emit("loginevent", false);
                 }
             });
