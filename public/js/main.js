@@ -26,7 +26,7 @@ var width = document.documentElement.clientWidth,
     player,
     active,
     activet = [], //viewable tiles should be a 2d array
-    oactive= [],
+    oactive = [],
     preloaded; //preloaded chunks
 
 
@@ -190,11 +190,12 @@ function getTile(x, y) {
             if (y == 17) {
                 y = 0;
             }
-            return preloaded[i].tiles[y][x].type;
 
+            return preloaded[i].tiles[y][x].type;
         }
     }
 }
+
 
 //kills sprites that are no longer viewable, can improve performance by only running on player movement
 function updateViewable() {
@@ -211,7 +212,6 @@ function updateViewable() {
               j,
               k,
               tmp,
-              tmp2,
               x,
               y;
 
@@ -220,9 +220,8 @@ function updateViewable() {
             while (j--) {
                 x = fulcrum.x + (j * 50);
                 y =  fulcrum.y + (i * 50);
-                tmp = getTile(x, y);
-                tmp2 = game.add.sprite(x, y, tmp);
-                activet.push(tmp2);
+                tmp = game.add.sprite(x, y, getTile(x, y));
+                activet.push(tmp);
             }
         }
 
@@ -278,6 +277,27 @@ function create() {
     tracker = new Phaser.Pointer(game, 37);
     tracker.clientX = 0;
     tracker.clientY = 0;
+
+    var i = tiles.y,
+          j,
+          x,
+          tmp,
+          y;
+
+    for (i = 0; i < tiles.y; i++) {
+        for (j = 0; j < tiles.x; j++) {
+            x = (j * 50);
+            y =  (i * 50);
+            tmp = game.add.sprite(x, y, getTile(x, y));
+            activet.push(tmp);
+        }
+    }
+
+    fulcrump = {
+        x: tileRound(tracker.worldX),
+        y: tileRound(tracker.worldY)
+    };
+
 }
 
 function update() {
@@ -286,12 +306,6 @@ function update() {
     hasArrived();
     updateChunks();
     player.bringToTop();
-}
-
-function render() {
-    "use strict";
-    //player pos debug info
-    //game.debug.spriteCoords(player, 32, height - 100);
 }
 
 /**
@@ -319,11 +333,6 @@ function createGame(core) {
             x: core[20].range.x,
             y: core[20].range.y
         }
-    }
-
-    fulcrump = {
-        x: 0,
-        y: 0
     };
 
     tiles = {
@@ -331,5 +340,5 @@ function createGame(core) {
         y: (round(height) / 50) + 1
     };
 
-    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render }, false, false);
+    game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update,  }, false, false);
 }

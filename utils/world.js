@@ -50,9 +50,8 @@ function typer(chunk) {
 
     for (i = 0; i < chunk.length; i++) {
         for (k = 0; k < chunk[i].length; k++) {
-            tmp = {
-                type: null,
-                active: false
+            tmp = { //allows for future expansion
+                type: null
             };
             if (chunk[i][k] < 20) {
                 tmp.type = '1';
@@ -168,7 +167,7 @@ exports.getChunks = function (range, core) {
         chunks.push(chunk);
     }
     return chunks;
-}
+};
 
 /**
  * @param range Range of the chunk being requested

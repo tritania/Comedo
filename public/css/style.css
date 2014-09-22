@@ -21,7 +21,7 @@ body {
     z-index: 2;
     background-color: #ffffff;
     width: 350px;
-    height: 220px;
+    height: 320px;
     text-align: center;
 }
 
@@ -29,6 +29,25 @@ body {
 
 }
 
+.register {
+    border: 2px solid #a1a1a1;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    margin-left: -175px;
+    visibility: hidden;
+    z-index: 2;
+    background-color: #ffffff;
+    width: 350px;
+    height: 320px;
+    text-align: center;
+}
+
+#ruser,
+#rpass,
+#rcpass,
+#remail,
+#gpass,
 #gid {
     margin: 0 auto;
     text-align: left;
@@ -41,8 +60,15 @@ body {
     width:280px;
 }
 
+#remail,
+#gpass {
+    margin-bottom:0px;
+}
+
+.button4,
 .button {
     margin: 0 auto;
+    margin-top: 0;
     margin-bottom: 10px;
     width: 280px;
     height: 36px;
@@ -56,6 +82,15 @@ body {
     width: 280px;
     height: 36px;
     background-color: #f0ad4e;
+    line-height: 36px;
+    cursor: pointer;
+}
+
+.button3 {
+    margin: 0 auto;
+    width: 280px;
+    height: 36px;
+    background-color: #ac3333;
     line-height: 36px;
     cursor: pointer;
 }

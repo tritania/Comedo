@@ -15,16 +15,28 @@
         <div class="container">
             <script type="text/javascript" src="js/main.js"></script>
             <div class="joiner" id="joined">
-                <p>Start a new game or join someone else's</p>
-                <input id="gid" type="text" placeholder="Game ID">
-                <div class="button" onclick="join()">
-                    <p id="buttontxt">START</p>
+                <p>Begin your adventure today!</p>
+                <input id="gid" type="text" placeholder="Username">
+                <input id="gpass" type="password" placeholder="Password">
+                <div class="button" onclick="login()">
+                    <p id="buttontxt">LOGIN</p>
                 </div>
-                <div class="button2" onclick="join()">
-                    <p id="buttontxt">TUTORIAL</p>
+                <div class="button3" onclick="register()">
+                    <p id="buttontxt">REGISTER</p>
+                </div>
+                <div class="button2" onclick="showcase()">
+                    <p id="buttontxt">SHOWCASE</p>
                 </div>
             </div>
-            <div class="designer">
+            <div class="register" id="regis">
+                <p>Register now!</p>
+                <input id="ruser" type="text" placeholder="Username">
+                <input id="rpass" type="password" placeholder="Password">
+                <input id="rcpass" type="password" placeholder="Confirm Password">
+                <input id="remail" type="text" placeholder="Email">
+                <div class="button4" onclick="checkreg()">
+                    <p id="buttontxt">CONFIRM</p>
+                </div>
             </div>
         </div>
     </body>
