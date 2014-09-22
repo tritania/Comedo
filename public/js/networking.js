@@ -77,7 +77,7 @@ function trylogin(data) {
  * Asks the server to register a new user
  * @param {Object} data JSON object containing username and password and email
  **/
-function tryregiter(data) {
+function tryregister(data) {
     "use strict";
     socket.emit("register", data);
 }
