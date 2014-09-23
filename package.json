@@ -13,7 +13,7 @@
   "scripts": {
       "pretest": "rm -rf ./db",
       "test": "tape test/*.js",
-      "posttest2": "rm -rf ./db"
+      "posttest": "rm -rf ./db"
   },
   "author": "Erik Wilson",
   "license": "GNU version 3",
