@@ -10,6 +10,11 @@
     "type": "git",
     "url": "git://github.com/tritania/Comedo.git"
   },
+  "scripts": {
+      "pretest": "rm -rf ./db",
+      "test": "tape test/*.js",
+      "posttest2": "rm -rf ./db"
+  },
   "author": "Erik Wilson",
   "license": "GNU version 3",
   "homepage": "https://github.com/tritania/Comedo",
@@ -21,5 +26,8 @@
     "method-override": "^1.0.0",
     "socket.io": "^1.0.4",
     "sqlite3": "^3.0.0"
+},
+  "devDependencies": {
+      "tape": "^3.0.0"
   }
 }
