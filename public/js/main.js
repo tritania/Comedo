@@ -25,6 +25,7 @@ var width = document.documentElement.clientWidth,
     tracker, //keeps track of the top leftmost tile
     player,
     active,
+    sbatch,
     activet = [], //viewable tiles should be a 2d array
     oactive = [],
     preloaded; //preloaded chunks
@@ -220,7 +221,7 @@ function updateViewable() {
             while (j--) {
                 x = fulcrum.x + (j * 50);
                 y =  fulcrum.y + (i * 50);
-                tmp = game.add.sprite(x, y, getTile(x, y));
+                tmp = sbatch.create(x, y, getTile(x, y));
                 activet.push(tmp);
             }
         }
@@ -278,6 +279,8 @@ function create() {
     tracker.clientX = 0;
     tracker.clientY = 0;
 
+    sbatch = game.add.spriteBatch();
+
     var i = tiles.y,
           j,
           x,
@@ -288,7 +291,7 @@ function create() {
         for (j = 0; j < tiles.x; j++) {
             x = (j * 50);
             y =  (i * 50);
-            tmp = game.add.sprite(x, y, getTile(x, y));
+            tmp = sbatch.create(x, y, getTile(x, y));
             activet.push(tmp);
         }
     }
