@@ -2,3 +2,4 @@
 utils/build
 node_modules
 db
+npm-debug.log

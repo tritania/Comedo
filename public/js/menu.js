@@ -1,12 +1,18 @@
 function login() {
-    document.getElementById("joined").style.visibility = "hidden";
     var user = document.getElementById("gid").value,
           pass = document.getElementById("gpass").value,
-          logindata = {
-              username: user,
-              password: pass
-          };
-          trylogin(logindata);
+          logindata;
+
+          if (user.length > 1 && pass.length > 1) {
+              logindata = {
+                  username: user,
+                  password: pass
+              };
+              trylogin(logindata);
+          } else {
+              document.getElementById("logtxt").innerHTML = "Invalid username or password";
+              document.getElementById("logtxt").style.color="#ac3333";
+          }
 }
 
 function showcase() {

@@ -27,6 +27,7 @@ socket.on("loginevent", function (data) {
         //login valid from server
     } else {
         document.getElementById("logtxt").innerHTML = "Login Failed.";
+        document.getElementById("logtxt").style.color="#ac3333";
         document.getElementById("gid").value  = "";
         document.getElementById("gpass").value  = "";
         //login not valid
@@ -35,7 +36,8 @@ socket.on("loginevent", function (data) {
 
 //Listens for a failed registration
 socket.on("regfailed", function (data) {
-    document.getElementById("regtxt").innerHTML = data.error;
+    document.getElementById("regtxt").innerHTML = "Username already in use!";
+    document.getElementById("regtxt").style.color="#ac3333";
 });
 
 /**
@@ -44,7 +46,8 @@ socket.on("regfailed", function (data) {
 function getMap() {
     "use strict";
     document.getElementById("joined").style.visibility = "hidden";
-    socket.emit("getmap", {val: true}); //send all data
+    document.getElementById("regis").style.visibility = "hidden";
+    socket.emit("getmap", true); //send all data
 }
 
 /**
