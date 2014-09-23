@@ -41,7 +41,7 @@ function round(num) {
 function tileRound(num) {
     "use strict";
     num = ~~num; //might need to round down
-    while (num % 50 != 0) {
+    while (num % 50 !== 0) {
         num--;
     }
     return num;
@@ -158,11 +158,11 @@ function getTile(x, y) {
     //     yp = Math.floor(yp/850) * 850;
     // }
 
-    while (xp % 850 != 0) {
+    while (xp % 850 !== 0) {
         xp = xp - 50;
     }
 
-    while (yp % 850 != 0) {
+    while (yp % 850 !== 0) {
         yp = yp - 50;
     }
 
