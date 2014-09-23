@@ -45,22 +45,24 @@ function start() {
 
         socket.on('login', function (data) {
             users.authUser(data.username, data.password, function(err, res) {
-                if (res) socket.emit("loginevent", true);
-                else {
-                    console.log("false");
+                if (res){
+                    socket.emit("loginevent", true);
+                    console.log("password true");
+                } else {
                     socket.emit("loginevent", false);
+                    console.log("Password false");
                 }
             });
         });
 
         socket.on('register', function (data) {
-            users.createUser(data.username, data.email, data.password, function(err, res) {
+            users.createUser(data.username, data.password, data.email, function(err, res) {
                 if (res) {
-                    console.log("registered");
                     socket.emit("loginevent", true);
+                    console.log("Registered");
                 } else {
                     socket.emit("regfailed", false);
-                    console.log("reg failed", err);
+                    console.log("Register Error");
                 }
 
              });

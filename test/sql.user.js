@@ -61,6 +61,38 @@ tape.test('deleteUser', function(t){
     });
 });
 
+tape.test('authUser', function(t){
+    users.authUser('test','test', function(err, result){
+        t.error(err);
+        t.equals(result, true);
+        t.end();
+    });
+});
+
+tape.test('authUserId', function(t){
+    users.authUserId('098f6bcd4621d373cade4e832627b4f6','test', function(err, result){
+        t.error(err);
+        t.equals(result, true);
+        t.end();
+    });
+});
+
+tape.test('authUser - Fail', function(t){
+    users.authUser('test','test2', function(err, result){
+        t.error(err);
+        t.equals(result, false);
+        t.end();
+    });
+});
+
+tape.test('authUser - Non-Existant', function(t){
+    users.authUser('test3','test2', function(err, result){
+        t.ok(err);
+        t.notOk(result);
+        t.end();
+    });
+});
+
 tape.test('deleteUserId', function(t){
     users.deleteUserId('098f6bcd4621d373cade4e832627b4f6', function(err, result){
         t.error(err);
@@ -68,10 +100,6 @@ tape.test('deleteUserId', function(t){
         t.end();
     });
 });
-
-//module.exports.authUser = authUser;
-//module.exports.authUserId = authUserId;
-
 
 tape.test('destroyUsersDatabase', function(t){
     manager.destroyUsersDatabase(function(err){
