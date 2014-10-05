@@ -4,9 +4,7 @@
   "description": "HTML5 game",
   "main": "index.html",
     "window": {
-    "toolbar": false,
-    "width": 800,
-    "height": 600
+    "toolbar": false
 },
   "repository": {
     "type": "git",
