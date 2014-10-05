@@ -1,5 +1,8 @@
-*.sh
 utils/build
 node_modules
 db
 npm-debug.log
+comedo
+comedo.nw
+*.dat
+*.pak

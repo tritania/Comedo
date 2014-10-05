@@ -1,30 +1,17 @@
 {
   "name": "Comedo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "HTML5 game",
-  "main": "server.js",
-  "scripts": {
-    "pretest": "rm -rf ./db",
-    "test": "tape test/*.js",
-    "posttest": "rm -rf ./db"
-  },
+  "main": "index.html",
+    "window": {
+    "toolbar": false,
+    "width": 800,
+    "height": 600
+},
   "repository": {
     "type": "git",
     "url": "git://github.com/tritania/Comedo.git"
   },
   "license": "GNU version 3",
-  "homepage": "https://github.com/tritania/Comedo",
-  "dependencies": {
-    "MD5": "^1.2.1",
-    "bcrypt": "^0.8.0",
-    "bcrypt-nodejs": "0.0.3",
-    "errorhandler": "^1.0.1",
-    "express": "^4.1.2",
-    "method-override": "^1.0.0",
-    "socket.io": "^1.0.4",
-    "sqlite3": "^3.0.0"
-  },
-  "devDependencies": {
-    "tape": "^3.0.0"
-  }
+  "homepage": "https://github.com/tritania/Comedo"
 }
