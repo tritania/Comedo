@@ -2,8 +2,11 @@ var socket;
 
 function tryserver() {
     var url = document.getElementById("surl").value;
+    if (!/^(f|ht)tps?:\/\//i.test(url)) {
+        url = "http://" + url;
+   }
     console.log("Attempt to join " + url);
-    socket = io.connect('http://'.concat(url));
+    socket = io.connect(url); //need to check if http is already there
 }
 
 // //listens for the initial piece of the map

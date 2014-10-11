@@ -62,4 +62,11 @@ function checkEmail() {
     } else {
             return false;
         }
-    }
+}
+
+/**
+ * Displays help for new players
+ */
+function help() {
+    "use strict";
+}
