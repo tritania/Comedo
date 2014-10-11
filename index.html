@@ -14,11 +14,18 @@
         <script type="text/javascript" src="js/movement.js"></script>
         <script type="text/javascript" src="js/networking.js"></script>
         <script type="text/javascript" src="js/tools.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/account.js"></script>
     </head>
     <body>
         <div class="container">
             <script type="text/javascript" src="js/main.js"></script>
+            <div class="serve" id="served">
+                <p id="logtxt">Pick a Server!</p>
+                <input id="surl" type="text" placeholder="Server Address">
+                <div class="button" onclick="tryserver()">
+                    <p id="buttontxt">JOIN</p>
+                </div>
+            </div>
             <div class="joiner" id="joined">
                 <p id="logtxt">Begin your adventure today!</p>
                 <input id="gpass" type="password" placeholder="Password">
@@ -37,7 +44,7 @@
                 <input id="ruser" type="text" placeholder="Username">
                 <input id="rpass" type="password" placeholder="Password">
                 <input id="rcpass" type="password" placeholder="Confirm Password">
-                <input id="remail" type="text" placeholder="Email">
+                <input id="remail" type="text" placeholder="Email (optional)">
                 <div class="button4" onclick="checkreg()">
                     <p id="buttontxt">CONFIRM</p>
                 </div>

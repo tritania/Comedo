@@ -1,17 +1,3 @@
-/*jslint node: true*/
-/*global Phaser, core, movePlayer, hasArrived*/
-/*jslint plusplus: true */
-
-/**
- * Stops the canvas from scrolling in browser
- */
-window.addEventListener("keydown", function (e) {
-    "use strict";
-    if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-        e.preventDefault();
-    }
-}, false);
-
 var width = document.documentElement.clientWidth,
     height = window.innerHeight,
     game,

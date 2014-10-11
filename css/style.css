@@ -11,6 +11,7 @@ body {
     font-family:OpenSans;color:black;
 }
 
+.serve,
 .joiner {
     border: 2px solid #a1a1a1;
     position: fixed;
@@ -23,6 +24,10 @@ body {
     width: 350px;
     height: 300px;
     text-align: center;
+}
+
+.joiner {
+    visibility: hidden;
 }
 
 .container {
@@ -48,6 +53,7 @@ body {
 #rcpass,
 #remail,
 #gpass,
+#surl,
 #gid {
     margin: 0 auto;
     text-align: left;

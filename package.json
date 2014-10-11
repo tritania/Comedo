@@ -4,7 +4,7 @@
   "description": "HTML5 game",
   "main": "index.html",
     "window": {
-    "toolbar": false
+    "toolbar": true
 },
   "repository": {
     "type": "git",
@@ -13,6 +13,6 @@
   "license": "GNU version 3",
   "homepage": "https://github.com/tritania/Comedo",
   "dependencies": {
-      "node-rsa": "0.1.53"
+      "openpgp": "0.7.2"
   }
 }

@@ -1,33 +1,29 @@
+/**
+ * HTML form verification and pass off to account.js
+ */
 function login() {
     var user = document.getElementById("gid").value,
-          pass = document.getElementById("gpass").value,
-          logindata;
+          pass = document.getElementById("gpass").value;
 
           if (user.length > 1 && pass.length > 1) {
-              logindata = {
-                  username: user,
-                  password: pass
-              };
-              trylogin(logindata);
+            login(user, pass);
           } else {
               document.getElementById("logtxt").innerHTML = "Invalid username or password";
               document.getElementById("logtxt").style.color="#ac3333";
           }
 }
 
-function showcase() {
-
-}
-
-function createUI() {
-
-}
-
+/**
+ * Hides the login form and displays the registration form
+ */
 function register() {
     document.getElementById("joined").style.visibility = "hidden";
     document.getElementById("regis").style.visibility = "visible";
 }
 
+/**
+ * HTML form verification and pass off to account.js
+ */
 function checkreg() {
     var user = document.getElementById("ruser").value,
           pass = document.getElementById("rpass").value,
@@ -41,19 +37,17 @@ function checkreg() {
           } else if (user === "") {
             document.getElementById("regtxt").innerHTML = "No username given";
             document.getElementById("regtxt").style.color="#ac3333";
-        } else if (!checkEmail()) {
+        } else if (email.length > 0 && !checkEmail()) {
             document.getElementById("regtxt").innerHTML = "Improper email given";
             document.getElementById("regtxt").style.color="#ac3333";
           } else {
-              data = {
-                username: user,
-                password: pass,
-                email: email
-              };
-              tryregister(data);
+             createKey(user, pass, email);
           }
 }
 
+/**
+ * HTML email value verification
+ */
 function checkEmail() {
     "use strict";
     var email = document.getElementById("remail").value,
