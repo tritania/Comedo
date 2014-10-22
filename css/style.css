@@ -32,6 +32,7 @@ body {
 
 .joiner {
     visibility: hidden;
+    height: 270px;
 }
 
 .container {

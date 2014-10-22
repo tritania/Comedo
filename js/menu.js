@@ -14,9 +14,14 @@ function login() {
 }
 
 /**
- * Hides the login form and displays the registration form
+ * Hides the connection form and displays the login form
  */
-function register() {
+function loginUI() {
+    document.getElementById("served").style.visibility = "hidden";
+    document.getElementById("joined").style.visibility = "visible";
+}
+
+function registerUI() {
     document.getElementById("joined").style.visibility = "hidden";
     document.getElementById("regis").style.visibility = "visible";
 }
