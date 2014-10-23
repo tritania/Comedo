@@ -2,6 +2,11 @@
     var gui = require('nw.gui');
     var win = gui.Window.get();
     win.maximize();
+
+    win.on('close', function() {
+    alert("Saving, will exit when done.");
+    this.close(true);
+});
 </script>
 <html>
     <head>
@@ -23,7 +28,7 @@
                 <p id="logtxt">Pick a Server!</p>
                 <input id="surl" type="text" placeholder="Server Address">
                 <div class="button" onclick="tryserver()">
-                    <p id="buttontxt">JOIN</p>
+                    <p id="buttontxt">CONNECT</p>
                 </div>
                 <div class="button3" onclick="help()">
                     <p id="buttontxt">HELP</p>
